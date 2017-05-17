@@ -1,0 +1,54 @@
+package fld;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+
+/**
+ * @author kazuhiko arase
+ */
+class StringVarProvider extends AbstractVarProvider<String> {
+
+  private final String encoding;
+
+  private final byte spc;
+
+  public StringVarProvider(String encoding) {
+    this.encoding = encoding;
+    try {
+      this.spc = "\u0020".getBytes(encoding)[0];
+    } catch(UnsupportedEncodingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public byte[] toBytes(String v, int length) {
+    try {
+      byte[] b = new byte[length];
+      Arrays.fill(b, spc);
+      if (v != null) {
+        byte[] d = v.getBytes(encoding);
+        if (d.length > b.length) {
+          throw new IllegalArgumentException("overflow:" + v);
+        }
+        System.arraycopy(d, 0, b, 0, d.length); 
+      }
+      return b;
+    } catch(UnsupportedEncodingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public String fromBytes(byte[] bytes) {
+    try {
+      int len = bytes.length;
+      while (len > 0 && bytes[len - 1] == spc) {
+        len -= 1;
+      }
+      return new String(bytes, 0, len, encoding);
+    } catch(UnsupportedEncodingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+}
