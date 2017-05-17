@@ -1,6 +1,7 @@
 package fld;
 
 import fld.pointer.IPointer;
+import fld.pointer.RootPointer;
 
 /**
  * @author kazuhiko arase
@@ -13,7 +14,9 @@ public class FldVar<T> {
   public FldVar(IPointer pointer, IFldVarProvider<T> provider) {
     this.pointer = pointer;
     this.provider = provider;
-    value(null);
+    if (!pointer.isRedefined() ) {
+      value(null);
+    }
   }
 
   @Override

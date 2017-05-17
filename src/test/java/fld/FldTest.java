@@ -12,7 +12,7 @@ import fld.pointer.RootPointer;
 public class FldTest {
 
   @Test
-  public void test1() {
+  public void pointer() {
 
     IPointer root = new RootPointer();
 
@@ -57,7 +57,35 @@ public class FldTest {
   }
 
   @Test
-  public void test2() throws Exception {
+  public void fld1() {
+
+    // working-storage section.
+    FldGrp wrkGrp = new FldGrp("MS932");
+    FldVar<BigDecimal> n1 = wrkGrp.num(5).value(BigDecimal.valueOf(9999) );
+    FldVar<BigDecimal> n2 = wrkGrp.redefines().num(4, 1);
+    FldVar<BigDecimal> n3 = wrkGrp.redefines().num(3, 2);
+
+    Assert.assertEquals(BigDecimal.valueOf(9999), n1.get() );
+    Assert.assertEquals(BigDecimal.valueOf(999.9), n2.get() );
+    Assert.assertEquals(BigDecimal.valueOf(99.99), n3.get() );
+  }
+
+  @Test
+  public void fld2() {
+
+    // working-storage section.
+    FldGrp wrkGrp = new FldGrp("MS932");
+    FldVar<BigDecimal> n1 = wrkGrp.num(3, 2).value(BigDecimal.valueOf(-99.99) );
+    FldVar<BigDecimal> n2 = wrkGrp.redefines().num(4, 1);
+    FldVar<BigDecimal> n3 = wrkGrp.redefines().num(5, 0);
+
+    Assert.assertEquals(BigDecimal.valueOf(-99.99), n1.get() );
+    Assert.assertEquals(BigDecimal.valueOf(-999.9), n2.get() );
+    Assert.assertEquals(BigDecimal.valueOf(-9999), n3.get() );
+  }
+
+  @Test
+  public void fld3() {
 
     // working-storage section.
     FldGrp wrkGrp = new FldGrp("MS932");
@@ -68,7 +96,7 @@ public class FldTest {
     FldVarList<BigDecimal> n1 = g2.num(4).value(BigDecimal.valueOf(14) );
     FldGrpList g3 = g2.grp();
     FldVarList<String> s3 = g3.str(4).value("XX");
-    FldVarList<BigDecimal> n2 = g3.num(5, 2).value(BigDecimal.valueOf(15.15) );
+    FldVarList<BigDecimal> n2 = g3.num(3, 2).value(BigDecimal.valueOf(15.15) );
 
     s1.set("abcd");
     s2.set("qwert");

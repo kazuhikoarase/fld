@@ -17,6 +17,11 @@ public class Pointer extends AbstractPointer {
   }
 
   @Override
+  public boolean isRedefined() {
+    return getParent().isRedefined();
+  }
+
+  @Override
   public void freeze() {
     if (value != null) {
       setBytes(value);
@@ -32,7 +37,9 @@ public class Pointer extends AbstractPointer {
   @Override
   public IPointer value(byte[] bytes) {
     if (isFreezed() ) {
-      throw new RuntimeException("freezed.");
+      throw new UnsupportedOperationException("already freezed.");
+    } else if (isRedefined() ) {
+      throw new UnsupportedOperationException("redefined data.");
     }
     this.value = bytes;
     return this;

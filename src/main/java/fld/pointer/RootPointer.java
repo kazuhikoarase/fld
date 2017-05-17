@@ -5,11 +5,24 @@ import java.util.List;
 
 public class RootPointer extends AbstractPointer {
 
-  private List<IPointer> pointers = new ArrayList<IPointer>();
-  private byte[] bytes = null;
+  private final RootPointer ref;
+  private List<IPointer> pointers;
+  private byte[] bytes;
 
   public RootPointer() {
+    this(null);
+  }
+
+  public RootPointer(RootPointer ref) {
     super(null, 0);
+    this.ref = ref;
+    this.pointers = new ArrayList<IPointer>();
+    this.bytes = null;
+  }
+
+  @Override
+  public boolean isRedefined() {
+    return ref != null;
   }
 
   @Override
@@ -19,9 +32,17 @@ public class RootPointer extends AbstractPointer {
     }
     List<IPointer> pointers = this.pointers;
     this.pointers = null;
-    bytes = new byte[getLength()];
-    for (IPointer pointer : pointers) {
-      pointer.freeze();
+    if (ref != null) {
+      if (ref.getBytes().length != getLength() ) {
+        throw new IllegalStateException("length unmatch:" + 
+            ref.getBytes().length + "!=" + getLength() );
+      }
+      bytes = ref.getBytes();
+    } else {
+      bytes = new byte[getLength()];
+      for (IPointer pointer : pointers) {
+        pointer.freeze();
+      }
     }
   }
 
@@ -51,7 +72,7 @@ public class RootPointer extends AbstractPointer {
   @Override
   public IPointer alloc(IPointer parent, IOffset offset, int length) {
     if (isFreezed() ) {
-      throw new UnsupportedOperationException("freezed");
+      throw new UnsupportedOperationException("already freezed");
     }
     parent.extent(length);
     IPointer pointer = new Pointer(parent, offset, length);

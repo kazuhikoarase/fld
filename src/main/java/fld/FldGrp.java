@@ -27,6 +27,13 @@ public class FldGrp {
     this.context = context;
   }
 
+  public FldGrp redefines() {
+    if (!(pointer instanceof RootPointer) ) {
+      throw new UnsupportedOperationException("not a top level group");
+    }
+    return new FldGrp(new RootPointer( (RootPointer)pointer), context);
+  }
+
   @Override
   public String toString() {
     try {
@@ -53,13 +60,13 @@ public class FldGrp {
         context.getStringProvider() );
   }
 
-  public FldVar<BigDecimal> num(int length, int digits) {
-    return new FldVar<BigDecimal>(pointer.alloc(length),
-        context.getNumberProvider(digits) );
+  public FldVar<BigDecimal> num(int ipartLen, int fpartLen) {
+    return new FldVar<BigDecimal>(pointer.alloc(ipartLen + fpartLen),
+        context.getNumberProvider(fpartLen) );
   }
 
-  public FldVar<BigDecimal> num(int length) {
-    return num(length, 0);
+  public FldVar<BigDecimal> num(int ipartLen) {
+    return num(ipartLen, 0);
   }
 
   public FldGrpList occurs(int count) {

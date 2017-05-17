@@ -61,12 +61,12 @@ public class FldGrpList implements Iterable<FldGrp>{
         context.getStringProvider() );
   }
 
-  public FldVarList<BigDecimal> num(int length, int digits) {
-    return new FldVarList<BigDecimal>(pointerList.alloc(length),
-        context.getNumberProvider(digits) );
+  public FldVarList<BigDecimal> num(int ipartLen, int fpartLen) {
+    return new FldVarList<BigDecimal>(pointerList.alloc(ipartLen + fpartLen),
+        context.getNumberProvider(fpartLen) );
   }
 
-  public FldVarList<BigDecimal> num(int length) {
-    return num(length, 0);
+  public FldVarList<BigDecimal> num(int ipartLen) {
+    return num(ipartLen, 0);
   }
 }

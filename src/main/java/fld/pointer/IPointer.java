@@ -6,8 +6,9 @@ package fld.pointer;
 public interface IPointer {
   IPointer getParent();
   void extent(int length);
-  boolean isFreezed();
   void freeze();
+  boolean isFreezed();
+  boolean isRedefined();
   void setBytes(byte[] bytes);
   byte[] getBytes();
   IPointer value(byte[] bytes);
