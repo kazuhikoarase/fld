@@ -326,6 +326,13 @@ public class FldTest {
     } finally {
       out.close();
     }
+  }
+
+  @Test
+  public void sample9() throws Exception {
+    MyGrp myGrp = new MyGrp();
+
+    File file = new File("items.txt");
 
     InputStream in = new BufferedInputStream(new FileInputStream(file) );
     try {

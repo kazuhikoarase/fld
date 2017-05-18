@@ -128,6 +128,8 @@ Define a reusable group (class).
   }
 ```
 
+Write to a file.
+
 ```java
     MyGrp myGrp = new MyGrp();
 
@@ -150,6 +152,14 @@ Define a reusable group (class).
     } finally {
       out.close();
     }
+```
+
+Read from a file.
+
+```java
+    MyGrp myGrp = new MyGrp();
+
+    File file = new File("items.txt");
 
     InputStream in = new BufferedInputStream(new FileInputStream(file) );
     try {
