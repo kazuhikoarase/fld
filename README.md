@@ -8,6 +8,20 @@ Fun of fixed length data with Java!
 ```java
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(1).value("1");
+    FldVar<String> s2 = wrk.str(2);
+    FldVar<BigDecimal> n1 = wrk.num(2).value(BigDecimal.valueOf(2) );
+    FldVar<BigDecimal> n2 = wrk.num(3).value(BigDecimal.valueOf(-50) );
+    FldVar<BigDecimal> n3 = wrk.num(2, 2);
+
+    s2.set("A");
+    n3.set(BigDecimal.valueOf(3.4) );
+
+    System.out.println(wrk); // 1A 0205p0340
+```
+
+```java
+    FldGrp wrk = new FldGrp();
+    FldVar<String> s1 = wrk.str(1).value("1");
     FldVar<String> s2 = wrk.str(2).value("23");
     FldVar<String> s3 = wrk.str(5).value("ABCDE");
     FldVar<String> s4 = wrk.redefine().str(8);
