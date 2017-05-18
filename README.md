@@ -182,3 +182,36 @@ Read from a file.
       in.close();
     }
 ```
+
+More complex.
+
+```java
+  public class DateGrp extends FldGrp {
+    public DateGrp(FldGrp grp) {
+      super(grp);
+    }
+    public final FldGrp yyyymm = grp();
+    public final FldVar<BigDecimal> yyyy = yyyymm.num(4);
+    public final FldVar<BigDecimal> mm = yyyymm.num(2);
+    public final FldVar<BigDecimal> dd = num(2);
+    public final FldVar<BigDecimal> yyyymmdd = redefine().num(8);
+  }
+
+  public class MyGrp2 extends FldGrp {
+    public final DateGrp date1 = new DateGrp(grp() );
+    public final DateGrp date2 = new DateGrp(grp() );
+  }
+```
+
+```java
+    MyGrp2 myGrp2 = new MyGrp2();
+    myGrp2.date1.yyyy.set(BigDecimal.valueOf(2017) );
+    myGrp2.date1.mm.set(BigDecimal.valueOf(1) );
+    myGrp2.date1.dd.set(BigDecimal.valueOf(1) );
+    myGrp2.date2.yyyymmdd.set(BigDecimal.valueOf(20171231) );
+
+    System.out.println(myGrp2.date1); // 20170101
+    System.out.println(myGrp2.date1.yyyymm); // 201701
+    System.out.println(myGrp2.date2); // 20171231
+    System.out.println(myGrp2); // 2017010120171231
+```

@@ -1,12 +1,8 @@
-package fld;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
@@ -14,6 +10,10 @@ import java.math.BigDecimal;
 import org.junit.Assert;
 import org.junit.Test;
 
+import fld.FldGrp;
+import fld.FldGrpList;
+import fld.FldVar;
+import fld.FldVarList;
 import fld.pointer.IPointer;
 import fld.pointer.IPointerList;
 import fld.pointer.RootPointer;
@@ -328,32 +328,34 @@ public class FldTest {
     }
   }
 
-  @Test
-  public void sample9() throws Exception {
-    MyGrp myGrp = new MyGrp();
-
-    File file = new File("items.txt");
-
-    InputStream in = new BufferedInputStream(new FileInputStream(file) );
-    try {
-
-      BigDecimal sum = BigDecimal.ZERO;
-
-      myGrp.recordCount.readFrom(in);
-      for (int i = 0; i < myGrp.recordCount.get().intValue(); i += 1) {
-        myGrp.record.readFrom(in);
-        sum = sum.add(myGrp.amount.get() );
-
-        // apple           000123
-        // orange          000234
-        System.out.println(myGrp.record);
-      }
-
-      System.out.println(sum); // 357
-
-    } finally {
-      in.close();
+  public class DateGrp extends FldGrp {
+    public DateGrp(FldGrp grp) {
+      super(grp);
     }
+    public final FldGrp yyyymm = grp();
+    public final FldVar<BigDecimal> yyyy = yyyymm.num(4);
+    public final FldVar<BigDecimal> mm = yyyymm.num(2);
+    public final FldVar<BigDecimal> dd = num(2);
+    public final FldVar<BigDecimal> yyyymmdd = redefine().num(8);
+  }
+
+  public class MyGrp2 extends FldGrp {
+    public final DateGrp date1 = new DateGrp(grp() );
+    public final DateGrp date2 = new DateGrp(grp() );
+  }
+
+  @Test
+  public void sample10() throws Exception {
+    MyGrp2 myGrp2 = new MyGrp2();
+    myGrp2.date1.yyyy.set(BigDecimal.valueOf(2017) );
+    myGrp2.date1.mm.set(BigDecimal.valueOf(1) );
+    myGrp2.date1.dd.set(BigDecimal.valueOf(1) );
+    myGrp2.date2.yyyymmdd.set(BigDecimal.valueOf(20171231) );
+
+    System.out.println(myGrp2.date1); // 20170101
+    System.out.println(myGrp2.date1.yyyymm); // 201701
+    System.out.println(myGrp2.date2); // 20171231
+    System.out.println(myGrp2); // 2017010120171231
   }
 
   protected void checkSerializable(Object o) {

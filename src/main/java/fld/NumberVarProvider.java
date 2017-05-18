@@ -31,9 +31,10 @@ class NumberVarProvider extends AbstractVarProvider<BigDecimal> {
     char[] c = new char[length];
     c[length - 1] = neg? NEG_DIGITS.charAt( (int)(l % 10) ) :
         DIGITS.charAt( (int)(l % 10) );
+    l /= 10;
     for (int i = 1; i < length; i += 1) {
-      l /= 10;
       c[length - 1 - i] = DIGITS.charAt( (int)(l % 10) );
+      l /= 10;
     }
     if (l != 0) {
       throw new IllegalArgumentException("overflow:" + v);
