@@ -6,6 +6,7 @@ import java.util.Arrays;
 /**
  * @author kazuhiko arase
  */
+@SuppressWarnings("serial")
 class StringVarProvider extends AbstractVarProvider<String> {
 
   private final String encoding;

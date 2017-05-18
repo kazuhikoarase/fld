@@ -1,5 +1,6 @@
 package fld;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.concurrent.ConcurrentHashMap;
@@ -7,7 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author kazuhiko arase
  */
-public class FldContext {
+@SuppressWarnings("serial")
+public class FldContext implements Serializable {
 
   private final String encoding;
   private final IFldVarProvider<String> stringProvider;

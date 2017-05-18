@@ -1,8 +1,10 @@
 package fld.pointer;
 
+
 /**
  * @author kazuhiko arase
  */
+@SuppressWarnings("serial")
 abstract class AbstractPointer implements IPointer {
 
   private final IPointer parent;
@@ -14,16 +16,24 @@ abstract class AbstractPointer implements IPointer {
   }
 
   @Override
-  public int getLength() {
-    return length;
+  public byte[] getBytes() {
+    byte[] bytes = new byte[getLength()];
+    System.arraycopy(getBuffer(), getOffset(), bytes, 0, getLength() );
+    return bytes;
   }
 
-  protected IPointer getRoot() {
-    IPointer p = this;
-    while (p.getParent() != null) {
-      p = p.getParent();
+  @Override
+  public void setBytes(byte[] bytes) {
+    if (bytes.length != getLength() ) {
+      throw new IllegalArgumentException(
+          bytes.length + "!=" + getLength() );
     }
-    return p;
+    System.arraycopy(bytes, 0, getBuffer(), getOffset(), bytes.length);
+  }
+
+  @Override
+  public int getLength() {
+    return length;
   }
 
   @Override
@@ -48,6 +58,11 @@ abstract class AbstractPointer implements IPointer {
         return AbstractPointer.this.getOffset() + offset;
       }
     }, length);
+  }
+
+  @Override
+  public IPointer redefine() {
+    return new PointerRef(this);
   }
 
   @Override

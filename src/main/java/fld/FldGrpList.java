@@ -1,5 +1,6 @@
 package fld;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -9,7 +10,8 @@ import fld.pointer.IPointerList;
 /**
  * @author kazuhiko arase
  */
-public class FldGrpList implements Iterable<FldGrp>{
+@SuppressWarnings("serial")
+public class FldGrpList implements Iterable<FldGrp>, Serializable {
 
   private final IPointerList pointerList;
   private final FldContext context;
@@ -23,7 +25,7 @@ public class FldGrpList implements Iterable<FldGrp>{
     if (n < 1 || n > pointerList.getCount() ) {
       throw new ArrayIndexOutOfBoundsException();
     }
-  return new FldGrp(pointerList.getPointerAt(n - 1), context);
+  return new FldGrp(pointerList.get(n - 1), context);
   }
 
   public int getCount() {
@@ -58,15 +60,19 @@ public class FldGrpList implements Iterable<FldGrp>{
 
   public FldVarList<String> str(int length) {
     return new FldVarList<String>(pointerList.alloc(length),
-        context.getStringProvider() );
+        context, context.getStringProvider() );
   }
 
   public FldVarList<BigDecimal> num(int ipartLen, int fpartLen) {
     return new FldVarList<BigDecimal>(pointerList.alloc(ipartLen + fpartLen),
-        context.getNumberProvider(fpartLen) );
+        context, context.getNumberProvider(fpartLen) );
   }
 
   public FldVarList<BigDecimal> num(int ipartLen) {
     return num(ipartLen, 0);
+  }
+
+  public FldGrpList redefine() {
+    return new FldGrpList(pointerList.redefine(), context);
   }
 }

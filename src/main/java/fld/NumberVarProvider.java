@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 /**
  * @author kazuhiko arase
  */
+@SuppressWarnings("serial")
 class NumberVarProvider extends AbstractVarProvider<BigDecimal> {
 
   private static final String DIGITS = "0123456789";
@@ -80,8 +81,7 @@ class NumberVarProvider extends AbstractVarProvider<BigDecimal> {
   protected static int ctoi(char c) {
     int i = DIGITS.indexOf(c);
     if (i == -1) {
-      throw new IllegalArgumentException(
-          "not a numeric char:" + c);
+      throw new IllegalArgumentException("not a numeric char:" + c);
     }
     return i;
   }

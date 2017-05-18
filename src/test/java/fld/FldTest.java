@@ -1,5 +1,8 @@
 package fld;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 
 import org.junit.Assert;
@@ -24,12 +27,19 @@ public class FldTest {
     IPointer gr = root.alloc(0);
     IPointer sub1 = gr.alloc(2);
     IPointer sub2 = gr.alloc(3);
+    IPointer gref = gr.redefine();
+    IPointer ref1 = gref.alloc(3);
+    IPointer ref2 = gref.alloc(2);
 
     IPointerList gr2 = root.alloc(0).occurs(3);
     IPointerList sub21 = gr2.alloc(2);
     IPointerList gr3 = gr2.alloc(0);
     IPointerList sub22 = gr3.alloc(3);
     IPointerList sub23 = gr3.alloc(4);
+
+    IPointerList gref2 = gr2.redefine();
+    IPointerList sub1ref = gref2.alloc(4);
+    IPointerList sub2ref = gref2.alloc(5);
 
     Assert.assertEquals(0, root.getOffset() );
     Assert.assertEquals(41, root.getLength() );
@@ -47,13 +57,25 @@ public class FldTest {
     System.out.println(c);
     System.out.println(sub1);
     System.out.println(sub2);
+
+    System.out.println(gref);
+    System.out.println(ref1);
+    System.out.println(ref2);
+
     System.out.println(sub21);
     System.out.println(sub22);
     System.out.println(sub23);
 
     System.out.println("--");
+    System.out.println(gref2);
+    System.out.println(sub1ref);
+    System.out.println(sub2ref);
+
+    System.out.println("--");
     System.out.println(gr2);
     System.out.println(gr3);
+
+    checkSerializable(root);
   }
 
   @Test
@@ -62,8 +84,8 @@ public class FldTest {
     // working-storage section.
     FldGrp wrkGrp = new FldGrp("MS932");
     FldVar<BigDecimal> n1 = wrkGrp.num(5).value(BigDecimal.valueOf(9999) );
-    FldVar<BigDecimal> n2 = wrkGrp.redefines().num(4, 1);
-    FldVar<BigDecimal> n3 = wrkGrp.redefines().num(3, 2);
+    FldVar<BigDecimal> n2 = n1.redefine().num(4, 1);
+    FldVar<BigDecimal> n3 = n2.redefine().num(3, 2);
 
     Assert.assertEquals(BigDecimal.valueOf(9999), n1.get() );
     Assert.assertEquals(BigDecimal.valueOf(999.9), n2.get() );
@@ -76,16 +98,28 @@ public class FldTest {
     // working-storage section.
     FldGrp wrkGrp = new FldGrp("MS932");
     FldVar<BigDecimal> n1 = wrkGrp.num(3, 2).value(BigDecimal.valueOf(-99.99) );
-    FldVar<BigDecimal> n2 = wrkGrp.redefines().num(4, 1);
-    FldVar<BigDecimal> n3 = wrkGrp.redefines().num(5, 0);
+    FldVar<BigDecimal> n2 = wrkGrp.redefine().num(4, 1);
+    FldVar<BigDecimal> n3 = wrkGrp.redefine().num(5, 0);
 
     Assert.assertEquals(BigDecimal.valueOf(-99.99), n1.get() );
     Assert.assertEquals(BigDecimal.valueOf(-999.9), n2.get() );
     Assert.assertEquals(BigDecimal.valueOf(-9999), n3.get() );
   }
-
   @Test
   public void fld3() {
+
+    // working-storage section.
+    FldGrpList wrkGrp = new FldGrp("MS932").grp().occurs(4);
+    FldVarList<String> s = wrkGrp.str(2);
+    s.get(1).set("a1");
+    s.get(2).set("b2");
+    s.get(3).set("c3");
+    s.get(4).set("d4");
+    System.out.println(s);
+  }
+
+  @Test
+  public void fld4() {
 
     // working-storage section.
     FldGrp wrkGrp = new FldGrp("MS932");
@@ -95,8 +129,12 @@ public class FldTest {
     FldGrpList g2 = wrkGrp.grp().occurs(3);
     FldVarList<BigDecimal> n1 = g2.num(4).value(BigDecimal.valueOf(14) );
     FldGrpList g3 = g2.grp();
-    FldVarList<String> s3 = g3.str(4).value("XX");
+    FldVarList<String> s3 = g3.str(4).value("XY");
     FldVarList<BigDecimal> n2 = g3.num(3, 2).value(BigDecimal.valueOf(15.15) );
+
+    FldGrpList ref = s3.redefine();
+    FldVarList<String> ref1 = ref.str(1);
+    FldVarList<String> ref2 = ref.str(1);
 
     s1.set("abcd");
     s2.set("qwert");
@@ -122,10 +160,31 @@ public class FldTest {
 
     Assert.assertEquals(3, s3.getCount() );
     for (FldVar<String> s : s3) {
-      Assert.assertEquals("XX", s.get() );
+      Assert.assertEquals("XY", s.get() );
     }
-    for (FldGrp g : g3) {
-      Assert.assertEquals("XX", g.toString().substring(0, 2) );
+
+    Assert.assertEquals(3, ref1.getCount() );
+    Assert.assertEquals(3, ref2.getCount() );
+    for (FldVar<String> s : ref1) {
+      Assert.assertEquals("X", s.get() );
+    }
+    for (FldVar<String> s : ref2) {
+      Assert.assertEquals("Y", s.get() );
+    }
+
+    checkSerializable(wrkGrp);
+  }
+
+  protected void checkSerializable(Object o) {
+    try {
+      new ObjectOutputStream(new OutputStream() {
+        @Override
+        public void write(int b) throws IOException {
+        }
+      } ).writeObject(o);
+    } catch(IOException e) {
+      e.printStackTrace();
+      Assert.fail(e.getMessage() );
     }
   }
 }

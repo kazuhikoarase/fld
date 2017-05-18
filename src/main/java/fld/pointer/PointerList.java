@@ -5,6 +5,7 @@ import java.util.Arrays;
 /**
  * @author kazuhiko arase
  */
+@SuppressWarnings("serial")
 public class PointerList implements IPointerList {
 
   private final IPointer[] list;
@@ -12,11 +13,11 @@ public class PointerList implements IPointerList {
 
   public PointerList(IPointer[] list) {
     this.list = list;
-    this.group = list[0].getLength() == 0;
+    group = list[0].getLength() == 0;
   }
 
   @Override
-  public IPointer getPointerAt(int n) {
+  public IPointer get(int n) {
     return list[n];
   }
 
@@ -26,9 +27,18 @@ public class PointerList implements IPointerList {
   }
 
   @Override
+  public IPointerList redefine() {
+    final IPointer[] newList = new IPointer[list.length];
+    for (int i = 0; i < list.length; i += 1) {
+      newList[i] = list[i].redefine();
+    }
+    return new PointerList(newList);
+  }
+
+  @Override
   public IPointerList alloc(int length) {
     if (!group) {
-      throw new RuntimeException("alloc not allowed.");
+      throw new UnsupportedOperationException("alloc not allowed.");
     }
     final IPointer[] newList = new IPointer[list.length];
     for (int i = 0; i < list.length; i += 1) {

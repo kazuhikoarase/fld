@@ -1,5 +1,6 @@
 package fld;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
@@ -9,7 +10,8 @@ import fld.pointer.RootPointer;
 /**
  * @author kazuhiko arase
  */
-public class FldGrp {
+@SuppressWarnings("serial")
+public class FldGrp implements Serializable {
 
   private final IPointer pointer;
   private final FldContext context;
@@ -25,13 +27,6 @@ public class FldGrp {
   protected FldGrp(IPointer pointer, FldContext context) {
     this.pointer = pointer;
     this.context = context;
-  }
-
-  public FldGrp redefines() {
-    if (!(pointer instanceof RootPointer) ) {
-      throw new UnsupportedOperationException("not a top level group");
-    }
-    return new FldGrp(new RootPointer( (RootPointer)pointer), context);
   }
 
   @Override
@@ -57,12 +52,12 @@ public class FldGrp {
 
   public FldVar<String> str(int length) {
     return new FldVar<String>(pointer.alloc(length),
-        context.getStringProvider() );
+        context, context.getStringProvider() );
   }
 
   public FldVar<BigDecimal> num(int ipartLen, int fpartLen) {
     return new FldVar<BigDecimal>(pointer.alloc(ipartLen + fpartLen),
-        context.getNumberProvider(fpartLen) );
+        context, context.getNumberProvider(fpartLen) );
   }
 
   public FldVar<BigDecimal> num(int ipartLen) {
@@ -71,5 +66,9 @@ public class FldGrp {
 
   public FldGrpList occurs(int count) {
     return new FldGrpList(pointer.occurs(count), context);
+  }
+
+  public FldGrp redefine() {
+    return new FldGrp(pointer.redefine(), context);
   }
 }

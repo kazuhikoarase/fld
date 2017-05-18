@@ -3,26 +3,29 @@ package fld.pointer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author kazuhiko arase
+ */
+@SuppressWarnings("serial")
 public class RootPointer extends AbstractPointer {
 
-  private final RootPointer ref;
+  private byte[] buffer;
   private List<IPointer> pointers;
-  private byte[] bytes;
 
   public RootPointer() {
-    this(null);
+    super(null, 0);
+    this.buffer = null;
+    this.pointers = new ArrayList<IPointer>();
   }
 
-  public RootPointer(RootPointer ref) {
-    super(null, 0);
-    this.ref = ref;
-    this.pointers = new ArrayList<IPointer>();
-    this.bytes = null;
+  @Override
+  public IPointer getRoot() {
+    return this;
   }
 
   @Override
   public boolean isRedefined() {
-    return ref != null;
+    return false;
   }
 
   @Override
@@ -32,17 +35,9 @@ public class RootPointer extends AbstractPointer {
     }
     List<IPointer> pointers = this.pointers;
     this.pointers = null;
-    if (ref != null) {
-      if (ref.getBytes().length != getLength() ) {
-        throw new IllegalStateException("length unmatch:" + 
-            ref.getBytes().length + "!=" + getLength() );
-      }
-      bytes = ref.getBytes();
-    } else {
-      bytes = new byte[getLength()];
-      for (IPointer pointer : pointers) {
-        pointer.freeze();
-      }
+    buffer = new byte[getLength()];
+    for (IPointer pointer : pointers) {
+      pointer.freeze();
     }
   }
 
@@ -52,16 +47,9 @@ public class RootPointer extends AbstractPointer {
   }
 
   @Override
-  public byte[] getBytes() {
+  public byte[] getBuffer() {
     freeze();
-    return bytes;
-  }
-
-  @Override
-  public void setBytes(byte[] bytes) {
-    freeze();
-    System.arraycopy(bytes, 0, this.bytes, 0,
-        Math.min(bytes.length, this.bytes.length) );
+    return buffer;
   }
 
   @Override
@@ -72,7 +60,7 @@ public class RootPointer extends AbstractPointer {
   @Override
   public IPointer alloc(IPointer parent, IOffset offset, int length) {
     if (isFreezed() ) {
-      throw new UnsupportedOperationException("already freezed");
+      throw new UnsupportedOperationException("already freezed.");
     }
     parent.extent(length);
     IPointer pointer = new Pointer(parent, offset, length);

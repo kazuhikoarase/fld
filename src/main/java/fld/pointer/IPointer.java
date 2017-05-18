@@ -1,16 +1,21 @@
 package fld.pointer;
 
+import java.io.Serializable;
+
 /**
  * @author kazuhiko arase
  */
-public interface IPointer {
+public interface IPointer extends Serializable {
   IPointer getParent();
+  IPointer getRoot();
   void extent(int length);
   void freeze();
   boolean isFreezed();
+  IPointer redefine();
   boolean isRedefined();
-  void setBytes(byte[] bytes);
+  byte[] getBuffer();
   byte[] getBytes();
+  void setBytes(byte[] bytes);
   IPointer value(byte[] bytes);
   int getLength();
   int getOffset();

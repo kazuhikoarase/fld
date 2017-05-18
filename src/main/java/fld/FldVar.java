@@ -1,18 +1,24 @@
 package fld;
 
+import java.io.Serializable;
+
 import fld.pointer.IPointer;
-import fld.pointer.RootPointer;
 
 /**
  * @author kazuhiko arase
  */
-public class FldVar<T> {
+@SuppressWarnings("serial")
+public class FldVar<T> implements Serializable {
 
   private final IPointer pointer;
+  private final FldContext context;
   private final IFldVarProvider<T> provider;
 
-  public FldVar(IPointer pointer, IFldVarProvider<T> provider) {
+  public FldVar(IPointer pointer,
+      FldContext context,
+      IFldVarProvider<T> provider) {
     this.pointer = pointer;
+    this.context = context;
     this.provider = provider;
     if (!pointer.isRedefined() ) {
       value(null);
@@ -42,6 +48,10 @@ public class FldVar<T> {
   }
 
   public FldVarList<T> occurs(int count) {
-    return new FldVarList<T>(pointer.occurs(count), provider);
+    return new FldVarList<T>(pointer.occurs(count), context, provider);
+  }
+
+  public FldGrp redefine() {
+    return new FldGrp(pointer.redefine(), context);
   }
 }
