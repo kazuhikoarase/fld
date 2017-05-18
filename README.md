@@ -3,7 +3,7 @@ FLD (Fixed Length Data libary)
 
 Fun of fixed length data with Java!
 
-###Code Samples
+### Code Samples
 
 ```java
     FldGrp wrk = new FldGrp();
@@ -11,6 +11,7 @@ Fun of fixed length data with Java!
     FldVar<String> s2 = wrk.str(2).value("23");
     FldVar<String> s3 = wrk.str(5).value("ABCDE");
     FldVar<String> s4 = wrk.redefine().str(8);
+
     System.out.println(s1); // 1
     System.out.println(s2); // 23
     System.out.println(s3); // ABCDE
