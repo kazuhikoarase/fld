@@ -43,6 +43,7 @@ class StringVarProvider extends AbstractVarProvider<String> {
   @Override
   public String fromBytes(byte[] bytes) {
     try {
+      // right trim
       int len = bytes.length;
       while (len > 0 && bytes[len - 1] == spc) {
         len -= 1;
