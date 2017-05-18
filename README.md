@@ -19,6 +19,8 @@ Fun of fixed length data with Java!
     System.out.println(wrk); // 1A 0205p0340
 ```
 
+Group variables.
+
 ```java
     FldGrp wrk = new FldGrp();
     FldGrp ws = wrk.grp();
@@ -36,6 +38,8 @@ Fun of fixed length data with Java!
     System.out.println(wn); // 0209y00340
     System.out.println(wrk); // ABC0209y00340
 ```
+
+Redefine variables.
 
 ```java
     FldGrp wrk = new FldGrp();
@@ -110,6 +114,8 @@ Fun of fixed length data with Java!
     System.out.println(s2); // [1, B]
     System.out.println(s3); // [23A, CDE]
 ```
+
+Define a reusable group (class).
 
 ```java
   public class MyGrp extends FldGrp {
