@@ -82,6 +82,8 @@ Redefine variables.
     System.out.println(s4); // 12345
 ```
 
+Split into a list.
+
 ```java
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(8).value("123ABCDE");
