@@ -182,10 +182,18 @@ public class FldTest {
     FldVar<String> s2 = wrk.str(2).value("23");
     FldVar<String> s3 = wrk.str(5).value("ABCDE");
     FldVar<String> s4 = wrk.redefine().str(8);
+
     System.out.println(s1); // 1
     System.out.println(s2); // 23
     System.out.println(s3); // ABCDE
     System.out.println(s4); // 123ABCDE
+
+    s4.set("XYZ12345");
+
+    System.out.println(s1); // X
+    System.out.println(s2); // YZ
+    System.out.println(s3); // 12345
+    System.out.println(s4); // XYZ12345
   }
 
   @Test
@@ -201,6 +209,13 @@ public class FldTest {
     System.out.println(s2); // 1
     System.out.println(s3); // 23
     System.out.println(s4); // ABCDE
+
+    s1.set("XYZ12345");
+
+    System.out.println(s1); // XYZ12345
+    System.out.println(s2); // X
+    System.out.println(s3); // YZ
+    System.out.println(s4); // 12345
   }
 
   @Test

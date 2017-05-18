@@ -16,6 +16,13 @@ Fun of fixed length data with Java!
     System.out.println(s2); // 23
     System.out.println(s3); // ABCDE
     System.out.println(s4); // 123ABCDE
+
+    s4.set("XYZ12345");
+
+    System.out.println(s1); // X
+    System.out.println(s2); // YZ
+    System.out.println(s3); // 12345
+    System.out.println(s4); // XYZ12345
 ```
 
 ```java
@@ -30,6 +37,13 @@ Fun of fixed length data with Java!
     System.out.println(s2); // 1
     System.out.println(s3); // 23
     System.out.println(s4); // ABCDE
+
+    s1.set("XYZ12345");
+
+    System.out.println(s1); // XYZ12345
+    System.out.println(s2); // X
+    System.out.println(s3); // YZ
+    System.out.println(s4); // 12345
 ```
 
 ```java
