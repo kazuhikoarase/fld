@@ -14,8 +14,8 @@ public class RootPointer extends AbstractPointer {
 
   public RootPointer() {
     super(null, 0);
-    this.buffer = null;
-    this.pointers = new ArrayList<IPointer>();
+    buffer = null;
+    pointers = new ArrayList<IPointer>();
   }
 
   @Override
@@ -33,10 +33,10 @@ public class RootPointer extends AbstractPointer {
     if (isFreezed() ) {
       return;
     }
-    List<IPointer> pointers = this.pointers;
-    this.pointers = null;
+    List<IPointer> _pointers = pointers;
+    pointers = null;
     buffer = new byte[getLength()];
-    for (IPointer pointer : pointers) {
+    for (IPointer pointer : _pointers) {
       pointer.freeze();
     }
   }

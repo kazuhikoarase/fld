@@ -1,5 +1,10 @@
 package fld.pointer;
 
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 
 /**
  * @author kazuhiko arase
@@ -29,6 +34,23 @@ abstract class AbstractPointer implements IPointer {
           bytes.length + "!=" + getLength() );
     }
     System.arraycopy(bytes, 0, getBuffer(), getOffset(), bytes.length);
+  }
+
+  @Override
+  public void writeTo(OutputStream out) throws IOException {
+    out.write(getBuffer(), getOffset(), getLength() );
+  }
+
+  @Override
+  public void readFrom(InputStream in) throws IOException {
+    int rest = getLength();
+    while (rest > 0) {
+      int len = in.read(getBuffer(), getOffset(), rest);
+      if (len == -1) {
+        throw new EOFException();
+      }
+      rest -= len;
+    }
   }
 
   @Override

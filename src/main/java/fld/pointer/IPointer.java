@@ -1,5 +1,8 @@
 package fld.pointer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 
 /**
@@ -22,4 +25,6 @@ public interface IPointer extends Serializable {
   IPointer alloc(int length);
   IPointer alloc(IPointer parent, IOffset offset, int length);
   IPointerList occurs(int count);
+  void readFrom(InputStream in) throws IOException;
+  void writeTo(OutputStream out) throws IOException;
 }

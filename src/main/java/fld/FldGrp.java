@@ -1,5 +1,8 @@
 package fld;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -44,6 +47,14 @@ public class FldGrp implements Serializable {
 
   public void setBytes(byte[] bytes) {
     pointer.setBytes(bytes);
+  }
+
+  public void writeTo(OutputStream out) throws IOException {
+    pointer.writeTo(out);
+  }
+
+  public void readFrom(InputStream in) throws IOException {
+    pointer.readFrom(in);
   }
 
   public FldGrp grp() {
