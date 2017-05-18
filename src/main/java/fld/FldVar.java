@@ -8,17 +8,13 @@ import fld.pointer.IPointer;
  * @author kazuhiko arase
  */
 @SuppressWarnings("serial")
-public class FldVar<T> implements Serializable {
+public class FldVar<T> extends AbstractFldVar implements Serializable {
 
-  private final IPointer pointer;
-  private final FldContext context;
   private final IFldVarProvider<T> provider;
 
-  public FldVar(IPointer pointer,
-      FldContext context,
+  public FldVar(IPointer pointer, FldContext context,
       IFldVarProvider<T> provider) {
-    this.pointer = pointer;
-    this.context = context;
+    super(pointer, context);
     this.provider = provider;
     if (!pointer.isRedefined() ) {
       value(null);
@@ -49,9 +45,5 @@ public class FldVar<T> implements Serializable {
 
   public FldVarList<T> occurs(int count) {
     return new FldVarList<T>(pointer.occurs(count), context, provider);
-  }
-
-  public FldGrp redefine() {
-    return new FldGrp(pointer.redefine(), context);
   }
 }

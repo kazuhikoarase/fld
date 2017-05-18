@@ -1,8 +1,5 @@
 package fld;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -14,10 +11,7 @@ import fld.pointer.RootPointer;
  * @author kazuhiko arase
  */
 @SuppressWarnings("serial")
-public class FldGrp implements Serializable {
-
-  private final IPointer pointer;
-  private final FldContext context;
+public class FldGrp extends AbstractFldVar implements Serializable {
 
   public FldGrp() {
     this(System.getProperty("file.encoding") );
@@ -28,8 +22,7 @@ public class FldGrp implements Serializable {
   }
 
   protected FldGrp(IPointer pointer, FldContext context) {
-    this.pointer = pointer;
-    this.context = context;
+    super(pointer, context);
   }
 
   @Override
@@ -39,22 +32,6 @@ public class FldGrp implements Serializable {
     } catch(UnsupportedEncodingException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  public byte[] getBytes() {
-    return pointer.getBytes();
-  }
-
-  public void setBytes(byte[] bytes) {
-    pointer.setBytes(bytes);
-  }
-
-  public void writeTo(OutputStream out) throws IOException {
-    pointer.writeTo(out);
-  }
-
-  public void readFrom(InputStream in) throws IOException {
-    pointer.readFrom(in);
   }
 
   public FldGrp grp() {
@@ -77,9 +54,5 @@ public class FldGrp implements Serializable {
 
   public FldGrpList occurs(int count) {
     return new FldGrpList(pointer.occurs(count), context);
-  }
-
-  public FldGrp redefine() {
-    return new FldGrp(pointer.redefine(), context);
   }
 }

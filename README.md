@@ -110,3 +110,44 @@ Fun of fixed length data with Java!
     System.out.println(s2); // [1, B]
     System.out.println(s3); // [23A, CDE]
 ```
+
+```java
+    FldGrp wrk = new FldGrp();
+    FldVar<BigDecimal> recordCount = wrk.num(3); // max 999 records.
+    FldGrp record = wrk.grp();
+    FldVar<String> name = record.str(16);
+    FldVar<BigDecimal> amount = record.num(6);
+
+    File file = new File("items.txt");
+
+    OutputStream out = new BufferedOutputStream(new FileOutputStream(file) );
+    try {
+
+      recordCount.set(BigDecimal.valueOf(2) );
+      recordCount.writeTo(out);
+
+      name.set("apple");
+      amount.set(BigDecimal.valueOf(123) );
+      record.writeTo(out);
+
+      name.set("orange");
+      amount.set(BigDecimal.valueOf(234) );
+      record.writeTo(out);
+
+    } finally {
+      out.close();
+    }
+
+    // apple           000123
+    // orange          000234
+    InputStream in = new BufferedInputStream(new FileInputStream(file) );
+    try {
+      recordCount.readFrom(in);
+      for (int i = 0; i < recordCount.get().intValue(); i += 1) {
+        record.readFrom(in);
+        System.out.println(record);
+      }
+    } finally {
+      in.close();
+    }
+```
