@@ -86,7 +86,9 @@ public class Pointer extends AbstractPointer {
           return Pointer.this.getOffset() + index * getLength();
         }
       }, length);
-      list[i].value(value);
+      if (!isRedefined() ) {
+        list[i].value(value);
+      }
     }
     return new PointerList(list);
   }
