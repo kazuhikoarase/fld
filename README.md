@@ -21,6 +21,24 @@ Fun of fixed length data with Java!
 
 ```java
     FldGrp wrk = new FldGrp();
+    FldGrp ws = wrk.grp();
+    FldVar<String> s1 = ws.str(1).value("A");
+    FldVar<String> s2 = ws.str(2);
+    FldGrp wn = wrk.grp();
+    FldVar<BigDecimal> n1 = wn.num(2).value(BigDecimal.valueOf(2) );
+    FldVar<BigDecimal> n2 = wn.num(3).value(BigDecimal.valueOf(-99) );
+    FldVar<BigDecimal> n3 = wn.num(3, 2);
+
+    s2.set("BC");
+    n3.set(BigDecimal.valueOf(3.4) );
+
+    System.out.println(ws); // ABC
+    System.out.println(wn); // 0209y00340
+    System.out.println(wrk); // ABC0209y00340
+```
+
+```java
+    FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(1).value("1");
     FldVar<String> s2 = wrk.str(2).value("23");
     FldVar<String> s3 = wrk.str(5).value("ABCDE");

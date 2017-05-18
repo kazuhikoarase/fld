@@ -176,7 +176,7 @@ public class FldTest {
   }
 
   @Test
-  public void sample0() {
+  public void sample1() {
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(1).value("1");
     FldVar<String> s2 = wrk.str(2);
@@ -191,7 +191,26 @@ public class FldTest {
   }
 
   @Test
-  public void sample1() {
+  public void sample2() {
+    FldGrp wrk = new FldGrp();
+    FldGrp ws = wrk.grp();
+    FldVar<String> s1 = ws.str(1).value("A");
+    FldVar<String> s2 = ws.str(2);
+    FldGrp wn = wrk.grp();
+    FldVar<BigDecimal> n1 = wn.num(2).value(BigDecimal.valueOf(2) );
+    FldVar<BigDecimal> n2 = wn.num(3).value(BigDecimal.valueOf(-99) );
+    FldVar<BigDecimal> n3 = wn.num(3, 2);
+
+    s2.set("BC");
+    n3.set(BigDecimal.valueOf(3.4) );
+
+    System.out.println(ws); // ABC
+    System.out.println(wn); // 0209y00340
+    System.out.println(wrk); // ABC0209y00340
+  }
+
+  @Test
+  public void sample3() {
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(1).value("1");
     FldVar<String> s2 = wrk.str(2).value("23");
@@ -212,7 +231,7 @@ public class FldTest {
   }
 
   @Test
-  public void sample2() {
+  public void sample4() {
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(8).value("123ABCDE");
     FldGrp wrk2 = wrk.redefine();
@@ -234,7 +253,7 @@ public class FldTest {
   }
 
   @Test
-  public void sample3() {
+  public void sample5() {
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(8).value("123ABCDE");
     FldGrp wrk2 = wrk.redefine();
@@ -245,7 +264,7 @@ public class FldTest {
   }
 
   @Test
-  public void sample4() {
+  public void sample6() {
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(8).value("123ABCDE");
     FldGrp wrk2 = wrk.redefine();
@@ -256,7 +275,7 @@ public class FldTest {
   }
 
   @Test
-  public void sample5() {
+  public void sample7() {
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(8).value("123ABCDE");
     FldGrp wrk2 = wrk.redefine();
