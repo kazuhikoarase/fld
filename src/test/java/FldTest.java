@@ -354,7 +354,7 @@ public class FldTest {
 
     System.out.println(myGrp2.date1); // 20170101
     System.out.println(myGrp2.date1.yyyymm); // 201701
-    System.out.println(myGrp2.date2); // 20171231
+    System.out.println(myGrp2.date2.mm); // 12
     System.out.println(myGrp2); // 2017010120171231
   }
 
