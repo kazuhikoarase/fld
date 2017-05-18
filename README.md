@@ -156,12 +156,13 @@ Define a reusable group (class).
 
       BigDecimal sum = BigDecimal.ZERO;
 
-      // apple           000123
-      // orange          000234
       myGrp.recordCount.readFrom(in);
       for (int i = 0; i < myGrp.recordCount.get().intValue(); i += 1) {
         myGrp.record.readFrom(in);
         sum = sum.add(myGrp.amount.get() );
+
+        // apple           000123
+        // orange          000234
         System.out.println(myGrp.record);
       }
 
