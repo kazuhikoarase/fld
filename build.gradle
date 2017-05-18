@@ -7,8 +7,10 @@ sourceCompatibility = 1.6
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
+version = '1.0.0'
+
 jar {
-  baseName "fld"
+  baseName 'fld'
 }
 
 task all {
