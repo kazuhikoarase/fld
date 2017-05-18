@@ -21,6 +21,10 @@ public class FldGrp extends AbstractFldVar implements Serializable {
     this(new RootPointer(), new FldContext(encoding) );
   }
 
+  protected FldGrp(FldGrp grp) {
+    super(grp.pointer, grp.context);
+  }
+
   protected FldGrp(IPointer pointer, FldContext context) {
     super(pointer, context);
   }

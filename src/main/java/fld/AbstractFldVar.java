@@ -16,7 +16,7 @@ public abstract class AbstractFldVar implements Serializable {
   protected final IPointer pointer;
   protected final FldContext context;
 
-  public AbstractFldVar(IPointer pointer, FldContext context) {
+  protected AbstractFldVar(IPointer pointer, FldContext context) {
     this.pointer = pointer;
     this.context = context;
   }

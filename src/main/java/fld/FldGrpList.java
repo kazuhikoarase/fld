@@ -13,8 +13,12 @@ import fld.pointer.IPointerList;
 @SuppressWarnings("serial")
 public class FldGrpList implements Iterable<FldGrp>, Serializable {
 
-  private final IPointerList pointerList;
-  private final FldContext context;
+  protected final IPointerList pointerList;
+  protected final FldContext context;
+
+  protected FldGrpList(FldGrpList list) {
+    this(list.pointerList, list.context);
+  }
 
   protected FldGrpList(IPointerList pointerList, FldContext context) {
     this.pointerList = pointerList;
