@@ -138,15 +138,22 @@ Fun of fixed length data with Java!
       out.close();
     }
 
-    // apple           000123
-    // orange          000234
     InputStream in = new BufferedInputStream(new FileInputStream(file) );
     try {
+
+      BigDecimal sum = BigDecimal.ZERO;
+
+      // apple           000123
+      // orange          000234
       recordCount.readFrom(in);
       for (int i = 0; i < recordCount.get().intValue(); i += 1) {
         record.readFrom(in);
+        sum = sum.add(amount.get() );
         System.out.println(record);
       }
+
+      System.out.println(sum); // 357
+
     } finally {
       in.close();
     }

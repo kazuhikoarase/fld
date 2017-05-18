@@ -181,6 +181,7 @@ public class FldTest {
     checkSerializable(wrkGrp);
   }
 
+  @SuppressWarnings("unused")
   @Test
   public void sample1() {
     FldGrp wrk = new FldGrp();
@@ -196,6 +197,7 @@ public class FldTest {
     System.out.println(wrk); // 1A 0205p0340
   }
 
+  @SuppressWarnings("unused")
   @Test
   public void sample2() {
     FldGrp wrk = new FldGrp();
@@ -322,15 +324,22 @@ public class FldTest {
       out.close();
     }
 
-    // apple           000123
-    // orange          000234
     InputStream in = new BufferedInputStream(new FileInputStream(file) );
     try {
+
+      BigDecimal sum = BigDecimal.ZERO;
+
+      // apple           000123
+      // orange          000234
       recordCount.readFrom(in);
       for (int i = 0; i < recordCount.get().intValue(); i += 1) {
         record.readFrom(in);
+        sum = sum.add(amount.get() );
         System.out.println(record);
       }
+
+      System.out.println(sum); // 357
+
     } finally {
       in.close();
     }
