@@ -29,6 +29,32 @@ public class FldGrp extends AbstractFldVar implements Serializable {
     super(pointer, context);
   }
 
+  public String get() {
+    return context.getStringProvider().fromBytes(getBytes() );
+  }
+
+  public void set(String v) {
+    setBytes(context.getStringProvider().
+        toBytes(v, pointer.getLength() ) );
+  }
+
+  public void set(BigDecimal v) {
+    setBytes(context.getNumberProvider(0).
+        toBytes(v, pointer.getLength() ) );
+  }
+
+  public FldGrp value(String v) {
+    pointer.value(context.getStringProvider().
+        toBytes(v, pointer.getLength() ) );
+    return this;
+  }
+
+  public FldGrp value(BigDecimal v) {
+    pointer.value(context.getNumberProvider(0).
+        toBytes(v, pointer.getLength() ) );
+    return this;
+  }
+
   @Override
   public String toString() {
     try {

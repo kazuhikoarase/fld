@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import fld.FldGrp;
@@ -29,7 +30,7 @@ public class CodeSamples {
     s2.set("A");
     n3.set(BigDecimal.valueOf(3.4) );
 
-    System.out.println(wrk); // 1A 0205p0340
+    Assert.assertEquals("1A 0205p0340", wrk.get() );
   }
 
   @Test
@@ -46,53 +47,56 @@ public class CodeSamples {
     s2.set("BC");
     n3.set(BigDecimal.valueOf(3.4) );
 
-    System.out.println(ws); // ABC
-    System.out.println(wn); // 0209y00340
-    System.out.println(wrk); // ABC0209y00340
+    Assert.assertEquals("ABC", ws.get() );
+    Assert.assertEquals("0209y00340", wn.get() );
+    Assert.assertEquals("ABC0209y00340", wrk.get() );
   }
 
-  // Redefine variables
   @Test
   public void sample3() {
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(1).value("1");
     FldVar<String> s2 = wrk.str(2).value("23");
     FldVar<String> s3 = wrk.str(5).value("ABCDE");
-    FldVar<String> s4 = wrk.redefine().str(8);
 
-    System.out.println(s1); // 1
-    System.out.println(s2); // 23
-    System.out.println(s3); // ABCDE
-    System.out.println(s4); // 123ABCDE
+    Assert.assertEquals("1", s1.get() );
+    Assert.assertEquals("23", s2.get() );
+    Assert.assertEquals("ABCDE", s3.get() );
+    Assert.assertEquals("123ABCDE", wrk.get() );
 
-    s4.set("XYZ12345");
+    wrk.set("XYZ12345");
 
-    System.out.println(s1); // X
-    System.out.println(s2); // YZ
-    System.out.println(s3); // 12345
-    System.out.println(s4); // XYZ12345
+    Assert.assertEquals("X", s1.get());
+    Assert.assertEquals("YZ", s2.get());
+    Assert.assertEquals("12345", s3.get());
+    Assert.assertEquals("XYZ12345", wrk.get() );
   }
 
+  // Redefine variables
   @Test
   public void sample4() {
     FldGrp wrk = new FldGrp();
-    FldVar<String> s1 = wrk.str(8).value("123ABCDE");
+    FldVar<String> s1 = wrk.str(4).value("1234");
+    FldVar<String> s2 = wrk.str(4).value("5678");
     FldGrp wrk2 = wrk.redefine();
-    FldVar<String> s2 = wrk2.str(1);
-    FldVar<String> s3 = wrk2.str(2);
-    FldVar<String> s4 = wrk2.str(5);
+    FldVar<String> s3 = wrk2.str(1);
+    FldVar<String> s4 = wrk2.str(2);
+    FldVar<String> s5 = wrk2.str(5);
 
-    System.out.println(s1); // 123ABCDE
-    System.out.println(s2); // 1
-    System.out.println(s3); // 23
-    System.out.println(s4); // ABCDE
+    Assert.assertEquals("12345678", wrk.get() );
+    Assert.assertEquals("1234", s1.get() );
+    Assert.assertEquals("5678", s2.get() );
+    Assert.assertEquals("1", s3.get() );
+    Assert.assertEquals("23", s4.get() );
+    Assert.assertEquals("45678", s5.get() );
 
-    s1.set("XYZ12345");
+    wrk.set("ABCDEFGH");
 
-    System.out.println(s1); // XYZ12345
-    System.out.println(s2); // X
-    System.out.println(s3); // YZ
-    System.out.println(s4); // 12345
+    Assert.assertEquals("ABCD", s1.get() );
+    Assert.assertEquals("EFGH", s2.get() );
+    Assert.assertEquals("A", s3.get() );
+    Assert.assertEquals("BC", s4.get() );
+    Assert.assertEquals("DEFGH", s5.get() );
   }
 
   // Split into a list
@@ -103,8 +107,11 @@ public class CodeSamples {
     FldGrp wrk2 = wrk.redefine();
     FldVarList<String> s2 = wrk2.str(2).occurs(4);
 
-    System.out.println(s1); // 123ABCDE
-    System.out.println(s2); // [12, 3A, BC, DE]
+    Assert.assertEquals("123ABCDE", s1.get() );
+    Assert.assertEquals("12", s2.get(1).get() );
+    Assert.assertEquals("3A", s2.get(2).get() );
+    Assert.assertEquals("BC", s2.get(3).get() );
+    Assert.assertEquals("DE", s2.get(4).get() );
   }
 
   @Test
@@ -114,8 +121,9 @@ public class CodeSamples {
     FldGrp wrk2 = wrk.redefine();
     FldVarList<String> s2 = wrk2.grp().occurs(2).str(4);
 
-    System.out.println(s1); // 123ABCDE
-    System.out.println(s2); // [123A, BCDE]
+    Assert.assertEquals("123ABCDE", s1.get() );
+    Assert.assertEquals("123A", s2.get(1).get() );
+    Assert.assertEquals("BCDE", s2.get(2).get() );
   }
 
   @Test
@@ -127,9 +135,11 @@ public class CodeSamples {
     FldVarList<String> s2 = gl.str(1);
     FldVarList<String> s3 = gl.str(3);
 
-    System.out.println(s1); // 123ABCDE
-    System.out.println(s2); // [1, B]
-    System.out.println(s3); // [23A, CDE]
+    Assert.assertEquals("123ABCDE", s1.get() ); // 
+    Assert.assertEquals("1", s2.get(1).get() );
+    Assert.assertEquals("B", s2.get(2).get() );
+    Assert.assertEquals("23A", s3.get(1).get() );
+    Assert.assertEquals("CDE", s3.get(2).get() );
   }
 
   // Define a reusable group (class)
@@ -179,17 +189,28 @@ public class CodeSamples {
       BigDecimal sum = BigDecimal.ZERO;
 
       myGrp.recordCount.readFrom(in);
-      for (int i = 0; i < myGrp.recordCount.get().intValue(); i += 1) {
-        myGrp.record.readFrom(in);
-        sum = sum.add(myGrp.amount.get() );
+      Assert.assertEquals(2, myGrp.recordCount.get().intValue() );
 
-        // apple           000123
-        // orange          000234
-        System.out.println(myGrp.record);
-        //myGrp.record.dumpBytes();
+      for (int i = 0; i < myGrp.recordCount.get().intValue(); i += 1) {
+
+        myGrp.record.readFrom(in);
+
+        myGrp.record.dumpBytes();
+
+        if (i == 0) {
+          Assert.assertEquals("apple", myGrp.name.get() );
+          Assert.assertEquals(123, myGrp.amount.get().intValue() );
+        } else if (i == 1) {
+          Assert.assertEquals("orange", myGrp.name.get() );
+          Assert.assertEquals(234, myGrp.amount.get().intValue() );
+        } else {
+          Assert.fail();
+        }
+
+        sum = sum.add(myGrp.amount.get() );
       }
 
-      System.out.println(sum); // 357
+      Assert.assertEquals(357, sum.intValue() );
 
     } finally {
       in.close();
@@ -201,11 +222,10 @@ public class CodeSamples {
     public DateGrp(FldGrp grp) {
       super(grp);
     }
-    public final FldGrp yyyymm = grp();
-    public final FldVar<BigDecimal> yyyy = yyyymm.num(4);
-    public final FldVar<BigDecimal> mm = yyyymm.num(2);
+    public final FldGrp ym = grp();
+    public final FldVar<BigDecimal> yy = ym.num(4);
+    public final FldVar<BigDecimal> mm = ym.num(2);
     public final FldVar<BigDecimal> dd = num(2);
-    public final FldVar<BigDecimal> yyyymmdd = redefine().num(8);
   }
 
   public static class MyGrp2 extends FldGrp {
@@ -216,14 +236,14 @@ public class CodeSamples {
   @Test
   public void sample10() throws Exception {
     MyGrp2 myGrp2 = new MyGrp2();
-    myGrp2.date1.yyyy.set(BigDecimal.valueOf(2017) );
+    myGrp2.date1.yy.set(BigDecimal.valueOf(2017) );
     myGrp2.date1.mm.set(BigDecimal.valueOf(1) );
     myGrp2.date1.dd.set(BigDecimal.valueOf(1) );
-    myGrp2.date2.yyyymmdd.set(BigDecimal.valueOf(20171231) );
+    myGrp2.date2.set("20171231");
 
-    System.out.println(myGrp2.date1); // 20170101
-    System.out.println(myGrp2.date1.yyyymm); // 201701
-    System.out.println(myGrp2.date2.mm); // 12
-    System.out.println(myGrp2); // 2017010120171231
+    Assert.assertEquals("20170101", myGrp2.date1.get() ); 
+    Assert.assertEquals("201701", myGrp2.date1.ym.get() );
+    Assert.assertEquals(12, myGrp2.date2.mm.get().intValue() );
+    Assert.assertEquals("2017010120171231", myGrp2.get() );
   }
 }
