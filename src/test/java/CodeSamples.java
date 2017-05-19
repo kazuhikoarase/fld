@@ -19,7 +19,8 @@ import fld.FldVarList;
 public class CodeSamples {
 
   @Test
-  public void sample1() {
+  public void sample01() {
+
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(1).value("1");
     FldVar<String> s2 = wrk.str(2);
@@ -34,7 +35,8 @@ public class CodeSamples {
   }
 
   @Test
-  public void sample2() {
+  public void sample02() {
+
     FldGrp wrk = new FldGrp();
     FldGrp ws = wrk.grp();
     FldVar<String> s1 = ws.str(1).value("A");
@@ -53,7 +55,8 @@ public class CodeSamples {
   }
 
   @Test
-  public void sample3() {
+  public void sample03() {
+
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(1).value("1");
     FldVar<String> s2 = wrk.str(2).value("23");
@@ -74,7 +77,8 @@ public class CodeSamples {
 
   // Redefine variables
   @Test
-  public void sample4() {
+  public void sample04() {
+
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(4).value("1234");
     FldVar<String> s2 = wrk.str(4).value("5678");
@@ -101,7 +105,8 @@ public class CodeSamples {
 
   // Split into a list
   @Test
-  public void sample5() {
+  public void sample05() {
+
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(8).value("123ABCDE");
     FldGrp wrk2 = wrk.redefine();
@@ -116,7 +121,8 @@ public class CodeSamples {
   }
 
   @Test
-  public void sample6() {
+  public void sample06() {
+
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(8).value("123ABCDE");
     FldGrp wrk2 = wrk.redefine();
@@ -129,7 +135,8 @@ public class CodeSamples {
   }
 
   @Test
-  public void sample7() {
+  public void sample07() {
+
     FldGrp wrk = new FldGrp();
     FldVar<String> s1 = wrk.str(8).value("123ABCDE");
     FldGrp wrk2 = wrk.redefine();
@@ -160,7 +167,8 @@ public class CodeSamples {
   }
 
   @Test
-  public void sample8() throws Exception {
+  public void sample08() throws Exception {
+
     MyGrp myGrp = new MyGrp();
 
     File file = new File("items.txt");
@@ -185,7 +193,8 @@ public class CodeSamples {
   }
 
   @Test
-  public void sample9() throws Exception {
+  public void sample09() throws Exception {
+
     MyGrp myGrp = new MyGrp();
 
     File file = new File("items.txt");
@@ -242,6 +251,7 @@ public class CodeSamples {
 
   @Test
   public void sample10() throws Exception {
+
     MyGrp2 myGrp2 = new MyGrp2();
     myGrp2.date1.yy.set(BigDecimal.valueOf(2017) );
     myGrp2.date1.mm.set(BigDecimal.valueOf(1) );
