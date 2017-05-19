@@ -20,8 +20,17 @@ Java
 FldGrp grp = new FldGrp();
 FldGrp gr = grp.grp();
 FldVar<String> s1 = gr.str(2);
-FldVar<String> s1 = gr.str(6);
+FldVar<String> s2 = gr.str(6);
 FldVar<BigDecimal> n1 = grp.num(4);
+```
+
+Groovy
+```groovy
+def grp = new FldGrp();
+def gr = grp.grp();
+def s1 = gr.str(2);
+def s2 = gr.str(6);
+def n1 = grp.num(4);
 ```
 
 ## Code Samples
