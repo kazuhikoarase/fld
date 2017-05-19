@@ -107,6 +107,40 @@ public class FldTest {
     checkSerializable(wrkGrp);
   }
 
+  @Test
+  public void fld5() {
+    FldVar<BigDecimal> dec = new FldGrp().num(2);
+    dec.set(BigDecimal.valueOf(99) );
+    Assert.assertEquals(BigDecimal.valueOf(99), dec.get() );
+    dec.set(BigDecimal.valueOf(-99) );
+    Assert.assertEquals(BigDecimal.valueOf(-99), dec.get() );
+    dec.set(BigDecimal.valueOf(1.4) );
+    Assert.assertEquals(BigDecimal.valueOf(1), dec.get() );
+    dec.set(BigDecimal.valueOf(1.5) );
+    Assert.assertEquals(BigDecimal.valueOf(1), dec.get() );
+    dec.set(BigDecimal.valueOf(-1.4) );
+    Assert.assertEquals(BigDecimal.valueOf(-1), dec.get() );
+    dec.set(BigDecimal.valueOf(-1.5) );
+    Assert.assertEquals(BigDecimal.valueOf(-1), dec.get() );
+  }
+
+  @Test
+  public void fld6() {
+    FldVar<BigDecimal> dec = new FldGrp().num(2, 1);
+    dec.set(BigDecimal.valueOf(99.9) );
+    Assert.assertEquals(BigDecimal.valueOf(99.9), dec.get() );
+    dec.set(BigDecimal.valueOf(-99.9) );
+    Assert.assertEquals(BigDecimal.valueOf(-99.9), dec.get() );
+    dec.set(BigDecimal.valueOf(0.14) );
+    Assert.assertEquals(BigDecimal.valueOf(0.1), dec.get() );
+    dec.set(BigDecimal.valueOf(0.15) );
+    Assert.assertEquals(BigDecimal.valueOf(0.1), dec.get() );
+    dec.set(BigDecimal.valueOf(-0.14) );
+    Assert.assertEquals(BigDecimal.valueOf(-0.1), dec.get() );
+    dec.set(BigDecimal.valueOf(-0.15) );
+    Assert.assertEquals(BigDecimal.valueOf(-0.1), dec.get() );
+  }
+
   public static void checkSerializable(Object o) {
     try {
       new ObjectOutputStream(new OutputStream() {
