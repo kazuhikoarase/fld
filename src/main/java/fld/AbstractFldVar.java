@@ -52,10 +52,11 @@ public abstract class AbstractFldVar implements Serializable {
   public void dumpBytes(PrintStream out) {
     synchronized(out) {
 
-      out.print("Offset:");
+      out.print("[ Offset:");
       out.print(pointer.getOffset() );
       out.print(" Length:");
       out.print(pointer.getLength() );
+      out.print(" ]");
       out.println();
 
       byte[] buf = pointer.getBuffer();
