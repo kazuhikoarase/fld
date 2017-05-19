@@ -20,23 +20,18 @@ public class PointerRef extends AbstractPointer {
   }
 
   @Override
+  public byte[] getBuffer() {
+    return ref.getBuffer();
+  }
+
+  @Override
   public boolean isRedefined() {
     return true;
   }
 
   @Override
-  public void freeze() {
-    ref.freeze();
-  }
-
-  @Override
   public boolean isFreezed() {
     return ref.isFreezed();
-  }
-
-  @Override
-  public byte[] getBuffer() {
-    return ref.getBuffer();
   }
 
   @Override
@@ -56,5 +51,10 @@ public class PointerRef extends AbstractPointer {
   @Override
   public IPointerList occurs(int count) {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void freeze() {
+    ref.freeze();
   }
 }

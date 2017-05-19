@@ -24,33 +24,19 @@ public class RootPointer extends AbstractPointer {
   }
 
   @Override
+  public byte[] getBuffer() {
+    freeze();
+    return buffer;
+  }
+
+  @Override
   public boolean isRedefined() {
     return false;
   }
 
   @Override
-  public void freeze() {
-    if (isFreezed() ) {
-      return;
-    }
-    List<IPointer> _pointers = pointers;
-    pointers = null;
-    buffer = new byte[getLength()];
-    for (int i = _pointers.size() - 1; i >= 0; i -= 1) {
-      _pointers.get(i).freeze();
-    }
-    super.freeze();
-  }
-
-  @Override
   public boolean isFreezed() {
     return pointers == null;
-  }
-
-  @Override
-  public byte[] getBuffer() {
-    freeze();
-    return buffer;
   }
 
   @Override
@@ -72,5 +58,19 @@ public class RootPointer extends AbstractPointer {
   @Override
   public IPointerList occurs(int count) {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void freeze() {
+    if (isFreezed() ) {
+      return;
+    }
+    List<IPointer> _pointers = pointers;
+    pointers = null;
+    buffer = new byte[getLength()];
+    for (int i = _pointers.size() - 1; i >= 0; i -= 1) {
+      _pointers.get(i).freeze();
+    }
+    super.freeze();
   }
 }
