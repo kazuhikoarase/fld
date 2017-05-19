@@ -48,6 +48,7 @@ public class CodeSamples {
     System.out.println(wrk); // ABC0209y00340
   }
 
+  // Redefine variables
   @Test
   public void sample3() {
     FldGrp wrk = new FldGrp();
@@ -91,6 +92,7 @@ public class CodeSamples {
     System.out.println(s4); // 12345
   }
 
+  // Split into a list
   @Test
   public void sample5() {
     FldGrp wrk = new FldGrp();
@@ -127,6 +129,7 @@ public class CodeSamples {
     System.out.println(s3); // [23A, CDE]
   }
 
+  // Define a reusable group (class)
   public class MyGrp extends FldGrp {
     public final FldVar<BigDecimal> recordCount = num(3); // max 999 records.
     public final FldGrp record = grp();
@@ -159,6 +162,7 @@ public class CodeSamples {
     }
   }
 
+  // More complex
   public class DateGrp extends FldGrp {
     public DateGrp(FldGrp grp) {
       super(grp);
