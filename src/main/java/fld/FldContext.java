@@ -33,7 +33,7 @@ public class FldContext implements Serializable {
   }
 
   public IFldVarProvider<BigDecimal> getNumberProvider(int digits) {
-    if (!numberProviderMap.containsKey(digits)) {
+    if (!numberProviderMap.containsKey(digits) ) {
       numberProviderMap.putIfAbsent(digits,
           new NumberVarProvider(encoding , digits) );
     }

@@ -66,9 +66,9 @@ public class CodeSamples {
 
     wrk.set("XYZ12345");
 
-    Assert.assertEquals("X", s1.get());
-    Assert.assertEquals("YZ", s2.get());
-    Assert.assertEquals("12345", s3.get());
+    Assert.assertEquals("X", s1.get() );
+    Assert.assertEquals("YZ", s2.get() );
+    Assert.assertEquals("12345", s3.get() );
     Assert.assertEquals("XYZ12345", wrk.get() );
   }
 
