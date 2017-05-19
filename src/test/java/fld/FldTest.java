@@ -1,12 +1,11 @@
 package fld;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import fld.pointer.TestUtil;
 
 public class FldTest {
 
@@ -104,7 +103,7 @@ public class FldTest {
       Assert.assertEquals("Y", s.get() );
     }
 
-    checkSerializable(wrkGrp);
+    TestUtil.checkSerializable(wrkGrp);
   }
 
   @Test
@@ -141,16 +140,15 @@ public class FldTest {
     Assert.assertEquals(BigDecimal.valueOf(-0.1), dec.get() );
   }
 
-  public static void checkSerializable(Object o) {
-    try {
-      new ObjectOutputStream(new OutputStream() {
-        @Override
-        public void write(int b) throws IOException {
-        }
-      } ).writeObject(o);
-    } catch(IOException e) {
-      e.printStackTrace();
-      Assert.fail(e.getMessage() );
-    }
+  @Test
+  public void fld7() {
+    FldGrp grp = new FldGrp().value("12345");
+    FldVar<String> s1 = grp.str(2).value("X"); // value will be ignored.
+    FldGrp gr = grp.grp().value("ZZZ"); // value will be ignored.
+    FldVar<String> s2 = gr.str(1).value("X"); // value will be ignored.
+    FldVar<String> s3 = gr.str(2);
+    Assert.assertEquals("12", s1.get() );
+    Assert.assertEquals("3", s2.get() );
+    Assert.assertEquals("45", s3.get() );
   }
 }

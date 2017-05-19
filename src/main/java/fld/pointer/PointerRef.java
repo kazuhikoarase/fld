@@ -57,9 +57,4 @@ public class PointerRef extends AbstractPointer {
   public IPointerList occurs(int count) {
     throw new UnsupportedOperationException();
   }
-
-  @Override
-  public IPointer value(byte[] bytes) {
-    throw new UnsupportedOperationException();
-  }
 }

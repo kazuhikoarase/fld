@@ -36,9 +36,10 @@ public class RootPointer extends AbstractPointer {
     List<IPointer> _pointers = pointers;
     pointers = null;
     buffer = new byte[getLength()];
-    for (IPointer pointer : _pointers) {
-      pointer.freeze();
+    for (int i = _pointers.size() - 1; i >= 0; i -= 1) {
+      _pointers.get(i).freeze();
     }
+    super.freeze();
   }
 
   @Override
@@ -70,11 +71,6 @@ public class RootPointer extends AbstractPointer {
 
   @Override
   public IPointerList occurs(int count) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public IPointer value(byte[] bytes) {
     throw new UnsupportedOperationException();
   }
 }

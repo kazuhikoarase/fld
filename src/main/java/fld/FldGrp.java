@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
 import fld.pointer.IPointer;
+import fld.pointer.IValue;
 import fld.pointer.RootPointer;
 
 /**
@@ -43,15 +44,25 @@ public class FldGrp extends AbstractFldVar implements Serializable {
         toBytes(v, pointer.getLength() ) );
   }
 
-  public FldGrp value(String v) {
-    pointer.value(context.getStringProvider().
-        toBytes(v, pointer.getLength() ) );
+  public FldGrp value(final String v) {
+    pointer.value(new IValue() {
+      @Override
+      public byte[] getValue() {
+        return context.getStringProvider().
+            toBytes(v, pointer.getLength() );
+      }
+    });
     return this;
   }
 
-  public FldGrp value(BigDecimal v) {
-    pointer.value(context.getNumberProvider(0).
-        toBytes(v, pointer.getLength() ) );
+  public FldGrp value(final BigDecimal v) {
+    pointer.value(new IValue() {
+      @Override
+      public byte[] getValue() {
+        return context.getNumberProvider(0).
+            toBytes(v, pointer.getLength() );
+      }
+    });
     return this;
   }
 

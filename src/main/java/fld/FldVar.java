@@ -3,6 +3,7 @@ package fld;
 import java.io.Serializable;
 
 import fld.pointer.IPointer;
+import fld.pointer.IValue;
 
 /**
  * @author kazuhiko arase
@@ -30,8 +31,13 @@ public class FldVar<T> extends AbstractFldVar implements Serializable {
     return provider.toBytes(v, pointer.getLength() );
   }
 
-  public FldVar<T> value(T v) {
-    pointer.value(toBytes(v) );
+  public FldVar<T> value(final T v) {
+    pointer.value(new IValue() {
+      @Override
+      public byte[] getValue() {
+        return toBytes(v);
+      }
+    });
     return this;
   }
 

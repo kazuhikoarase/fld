@@ -19,7 +19,7 @@ public interface IPointer extends Serializable {
   byte[] getBuffer();
   byte[] getBytes();
   void setBytes(byte[] bytes);
-  IPointer value(byte[] bytes);
+  IPointer value(IValue value);
   int getLength();
   int getOffset();
   IPointer alloc(int length);

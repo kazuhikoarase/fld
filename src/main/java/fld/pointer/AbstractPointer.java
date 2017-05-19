@@ -14,10 +14,12 @@ abstract class AbstractPointer implements IPointer {
 
   private final IPointer parent;
   private int length;
+  protected IValue value;
 
   protected AbstractPointer(IPointer parent, int length) {
     this.parent = parent;
     this.length = length;
+    this.value = null;
   }
 
   @Override
@@ -34,6 +36,25 @@ abstract class AbstractPointer implements IPointer {
           bytes.length + "!=" + getLength() );
     }
     System.arraycopy(bytes, 0, getBuffer(), getOffset(), bytes.length);
+  }
+
+  @Override
+  public void freeze() {
+    if (value != null) {
+      setBytes(value.getValue() );
+      value = null;
+    }
+  }
+
+  @Override
+  public IPointer value(IValue value) {
+    if (isFreezed() ) {
+      throw new UnsupportedOperationException("already freezed.");
+    } else if (isRedefined() ) {
+      throw new UnsupportedOperationException("redefined data.");
+    }
+    this.value = value;
+    return this;
   }
 
   @Override

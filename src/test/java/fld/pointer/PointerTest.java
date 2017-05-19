@@ -3,8 +3,6 @@ package fld.pointer;
 import org.junit.Assert;
 import org.junit.Test;
 
-import fld.FldTest;
-
 public class PointerTest {
 
   @Test
@@ -68,6 +66,6 @@ public class PointerTest {
     System.out.println(gr2);
     System.out.println(gr3);
 
-    FldTest.checkSerializable(root);
+    TestUtil.checkSerializable(root);
   }
 }

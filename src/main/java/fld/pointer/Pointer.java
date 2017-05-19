@@ -8,7 +8,6 @@ package fld.pointer;
 public class Pointer extends AbstractPointer {
 
   private final IOffset offset;
-  private byte[] value;
   private final boolean group;
 
   public Pointer(IPointer parent, IOffset offset, int length) {
@@ -17,7 +16,6 @@ public class Pointer extends AbstractPointer {
       throw new NullPointerException();
     }
     this.offset = offset;
-    this.value = null;
     this.group = length == 0;
   }
 
@@ -37,27 +35,8 @@ public class Pointer extends AbstractPointer {
   }
 
   @Override
-  public void freeze() {
-    if (value != null) {
-      setBytes(value);
-      value = null;
-    }
-  }
-
-  @Override
   public boolean isFreezed() {
     return getParent().isFreezed();
-  }
-
-  @Override
-  public IPointer value(byte[] bytes) {
-    if (isFreezed() ) {
-      throw new UnsupportedOperationException("already freezed.");
-    } else if (isRedefined() ) {
-      throw new UnsupportedOperationException("redefined data.");
-    }
-    this.value = bytes;
-    return this;
   }
 
   @Override
