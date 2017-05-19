@@ -144,6 +144,9 @@ public class CodeSamples {
     Assert.assertEquals(2, s3.getCount() );
     Assert.assertEquals("23A", s3.get(1).get() );
     Assert.assertEquals("CDE", s3.get(2).get() );
+    Assert.assertEquals(2, gl.getCount() );
+    Assert.assertEquals("123A", gl.get(1).get() );
+    Assert.assertEquals("BCDE", gl.get(2).get() );
   }
 
   // Define a reusable group (class)
