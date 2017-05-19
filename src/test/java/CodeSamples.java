@@ -1,6 +1,9 @@
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 
@@ -130,7 +133,9 @@ public class CodeSamples {
   }
 
   // Define a reusable group (class)
-  public class MyGrp extends FldGrp {
+  public static class MyGrp extends FldGrp {
+    // try EBCDIC.
+    //public MyGrp() { super("Cp037"); }
     public final FldVar<BigDecimal> recordCount = num(3); // max 999 records.
     public final FldGrp record = grp();
     public final FldVar<String> name = record.str(16);
@@ -162,8 +167,37 @@ public class CodeSamples {
     }
   }
 
+  @Test
+  public void sample9() throws Exception {
+    MyGrp myGrp = new MyGrp();
+
+    File file = new File("items.txt");
+
+    InputStream in = new BufferedInputStream(new FileInputStream(file) );
+    try {
+
+      BigDecimal sum = BigDecimal.ZERO;
+
+      myGrp.recordCount.readFrom(in);
+      for (int i = 0; i < myGrp.recordCount.get().intValue(); i += 1) {
+        myGrp.record.readFrom(in);
+        sum = sum.add(myGrp.amount.get() );
+
+        // apple           000123
+        // orange          000234
+        System.out.println(myGrp.record);
+        //myGrp.record.dumpBytes();
+      }
+
+      System.out.println(sum); // 357
+
+    } finally {
+      in.close();
+    }
+  }
+
   // More complex
-  public class DateGrp extends FldGrp {
+  public static class DateGrp extends FldGrp {
     public DateGrp(FldGrp grp) {
       super(grp);
     }
@@ -174,7 +208,7 @@ public class CodeSamples {
     public final FldVar<BigDecimal> yyyymmdd = redefine().num(8);
   }
 
-  public class MyGrp2 extends FldGrp {
+  public static class MyGrp2 extends FldGrp {
     public final DateGrp date1 = new DateGrp(grp() );
     public final DateGrp date2 = new DateGrp(grp() );
   }
