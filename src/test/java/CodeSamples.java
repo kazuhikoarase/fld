@@ -108,6 +108,7 @@ public class CodeSamples {
     FldVarList<String> s2 = wrk2.str(2).occurs(4);
 
     Assert.assertEquals("123ABCDE", s1.get() );
+    Assert.assertEquals(4, s2.getCount() );
     Assert.assertEquals("12", s2.get(1).get() );
     Assert.assertEquals("3A", s2.get(2).get() );
     Assert.assertEquals("BC", s2.get(3).get() );
@@ -122,6 +123,7 @@ public class CodeSamples {
     FldVarList<String> s2 = wrk2.grp().occurs(2).str(4);
 
     Assert.assertEquals("123ABCDE", s1.get() );
+    Assert.assertEquals(2, s2.getCount() );
     Assert.assertEquals("123A", s2.get(1).get() );
     Assert.assertEquals("BCDE", s2.get(2).get() );
   }
@@ -135,9 +137,11 @@ public class CodeSamples {
     FldVarList<String> s2 = gl.str(1);
     FldVarList<String> s3 = gl.str(3);
 
-    Assert.assertEquals("123ABCDE", s1.get() ); // 
+    Assert.assertEquals("123ABCDE", s1.get() );
+    Assert.assertEquals(2, s2.getCount() );
     Assert.assertEquals("1", s2.get(1).get() );
     Assert.assertEquals("B", s2.get(2).get() );
+    Assert.assertEquals(2, s3.getCount() );
     Assert.assertEquals("23A", s3.get(1).get() );
     Assert.assertEquals("CDE", s3.get(2).get() );
   }
