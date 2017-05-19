@@ -29,33 +29,11 @@ public class FldGrpList implements Iterable<FldGrp>, Serializable {
     if (n < 1 || n > pointerList.getCount() ) {
       throw new ArrayIndexOutOfBoundsException();
     }
-  return new FldGrp(pointerList.get(n - 1), context);
+    return new FldGrp(pointerList.get(n - 1), context);
   }
 
   public int getCount() {
     return pointerList.getCount();
-  }
-
-  @Override
-  public Iterator<FldGrp> iterator() {
-    return new Iterator<FldGrp>() {
-      private int index = 0;
-      @Override
-      public boolean hasNext() {
-        return index < getCount();
-      }
-      @Override
-      public FldGrp next() {
-        if (!hasNext() ) {
-          throw new NoSuchElementException();
-        }
-        return get(++index);
-      }
-      @Override
-      public void remove() {
-        throw new UnsupportedOperationException();
-      }
-    };
   }
 
   public FldGrpList grp() {
@@ -78,5 +56,27 @@ public class FldGrpList implements Iterable<FldGrp>, Serializable {
 
   public FldGrpList redefine() {
     return new FldGrpList(pointerList.redefine(), context);
+  }
+
+  @Override
+  public Iterator<FldGrp> iterator() {
+    return new Iterator<FldGrp>() {
+      private int index = 0;
+      @Override
+      public boolean hasNext() {
+        return index < getCount();
+      }
+      @Override
+      public FldGrp next() {
+        if (!hasNext() ) {
+          throw new NoSuchElementException();
+        }
+        return get(++index);
+      }
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+    };
   }
 }

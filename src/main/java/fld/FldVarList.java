@@ -27,18 +27,6 @@ public class FldVarList<T> implements Iterable<FldVar<T>>, Serializable {
     }
   }
 
-  @Override
-  public String toString() {
-    return Arrays.asList(list).toString();
-  }
-
-  public FldVarList<T> value(T v) {
-    for (FldVar<?> var : list) {
-      ((FldVar<T>)var).value(v);
-    }
-    return this;
-  }
-
   public FldVar<T> get(int n) {
     if (n < 1 || n > list.length) {
       throw new ArrayIndexOutOfBoundsException();
@@ -48,6 +36,22 @@ public class FldVarList<T> implements Iterable<FldVar<T>>, Serializable {
 
   public int getCount() {
     return list.length;
+  }
+
+  public FldVarList<T> value(T v) {
+    for (FldVar<?> var : list) {
+      ((FldVar<T>)var).value(v);
+    }
+    return this;
+  }
+
+  public FldGrpList redefine() {
+    return new FldGrpList(pointerList.redefine(), context);
+  }
+
+  @Override
+  public String toString() {
+    return Arrays.asList(list).toString();
   }
 
   @Override
@@ -70,9 +74,5 @@ public class FldVarList<T> implements Iterable<FldVar<T>>, Serializable {
         throw new UnsupportedOperationException();
       }
     };
-  }
-
-  public FldGrpList redefine() {
-    return new FldGrpList(pointerList.redefine(), context);
   }
 }
