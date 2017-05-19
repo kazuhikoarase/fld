@@ -158,8 +158,10 @@ public class CodeSamples {
 
   // Define a reusable group (class)
   public static class MyGrp extends FldGrp {
-    // try EBCDIC.
-    //public MyGrp() { super("Cp037"); }
+    public MyGrp() {
+      // use EBCDIC.
+      super("Cp037");
+    }
     public final FldVar<BigDecimal> recordCount = num(3); // max 999 records.
     public final FldGrp record = grp();
     public final FldVar<String> name = record.str(16);

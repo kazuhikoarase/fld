@@ -13,7 +13,7 @@ public class FldTest {
   public void fld1() {
 
     // working-storage section.
-    FldGrp wrkGrp = new FldGrp("MS932");
+    FldGrp wrkGrp = new FldGrp("ISO-8859-1");
     FldVar<BigDecimal> n1 = wrkGrp.num(5).value(BigDecimal.valueOf(9999) );
     FldVar<BigDecimal> n2 = n1.redefine().num(4, 1);
     FldVar<BigDecimal> n3 = n2.redefine().num(3, 2);
@@ -27,7 +27,7 @@ public class FldTest {
   public void fld2() {
 
     // working-storage section.
-    FldGrp wrkGrp = new FldGrp("MS932");
+    FldGrp wrkGrp = new FldGrp("ISO-8859-1");
     FldVar<BigDecimal> n1 = wrkGrp.num(3, 2).value(BigDecimal.valueOf(-99.99) );
     FldVar<BigDecimal> n2 = wrkGrp.redefine().num(4, 1);
     FldVar<BigDecimal> n3 = wrkGrp.redefine().num(5, 0);
@@ -40,7 +40,7 @@ public class FldTest {
   public void fld3() {
 
     // working-storage section.
-    FldGrpList wrkGrp = new FldGrp("MS932").grp().occurs(4);
+    FldGrpList wrkGrp = new FldGrp("ISO-8859-1").grp().occurs(4);
     FldVarList<String> s = wrkGrp.str(2);
     s.get(1).set("a1");
     s.get(2).set("b2");
@@ -53,7 +53,7 @@ public class FldTest {
   public void fld4() {
 
     // working-storage section.
-    FldGrp wrkGrp = new FldGrp("MS932");
+    FldGrp wrkGrp = new FldGrp("ISO-8859-1");
     FldGrp g1 = wrkGrp.grp();
     FldVar<String> s1 = g1.str(4);
     FldVar<String> s2 = g1.str(5);
