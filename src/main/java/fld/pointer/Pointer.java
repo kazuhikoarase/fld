@@ -5,7 +5,7 @@ package fld.pointer;
  * @author kazuhiko arase
  */
 @SuppressWarnings("serial")
-public class Pointer extends AbstractPointer {
+class Pointer extends AbstractPointer {
 
   private final IOffset offset;
   private final boolean group;

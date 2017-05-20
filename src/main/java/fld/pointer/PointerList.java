@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author kazuhiko arase
  */
 @SuppressWarnings("serial")
-public class PointerList implements IPointerList {
+class PointerList implements IPointerList {
 
   private final IPointer[] list;
   private final boolean group;

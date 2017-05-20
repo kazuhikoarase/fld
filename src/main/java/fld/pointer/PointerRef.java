@@ -5,7 +5,7 @@ package fld.pointer;
  * @author kazuhiko arase
  */
 @SuppressWarnings("serial")
-public class PointerRef extends AbstractPointer {
+class PointerRef extends AbstractPointer {
 
   private final IPointer ref;
 
