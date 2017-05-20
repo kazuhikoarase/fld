@@ -13,18 +13,13 @@ public class FldVar<T> extends AbstractFldVar implements Serializable {
 
   private final IFldVarProvider<T> provider;
 
-  public FldVar(IPointer pointer, FldContext context,
+  protected FldVar(IPointer pointer, FldContext context,
       IFldVarProvider<T> provider) {
     super(pointer, context);
     this.provider = provider;
     if (!pointer.isRedefined() ) {
       value(null);
     }
-  }
-
-  @Override
-  public String toString() {
-    return get().toString();
   }
 
   protected byte[] toBytes(T v) {
@@ -51,5 +46,10 @@ public class FldVar<T> extends AbstractFldVar implements Serializable {
 
   public FldVarList<T> occurs(int count) {
     return new FldVarList<T>(pointer.occurs(count), context, provider);
+  }
+
+  @Override
+  public String toString() {
+    return get().toString();
   }
 }

@@ -50,11 +50,6 @@ public class FldVarList<T> implements Iterable<FldVar<T>>, Serializable {
   }
 
   @Override
-  public String toString() {
-    return Arrays.asList(list).toString();
-  }
-
-  @Override
   public Iterator<FldVar<T>> iterator() {
     return new Iterator<FldVar<T>>() {
       private int index = 0;
@@ -74,5 +69,10 @@ public class FldVarList<T> implements Iterable<FldVar<T>>, Serializable {
         throw new UnsupportedOperationException();
       }
     };
+  }
+
+  @Override
+  public String toString() {
+    return Arrays.asList(list).toString();
   }
 }

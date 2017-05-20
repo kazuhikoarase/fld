@@ -15,6 +15,8 @@ import fld.pointer.IPointer;
 @SuppressWarnings("serial")
 public abstract class AbstractFldVar implements Serializable {
 
+  private static final String HEX = "0123456789abcdef";
+
   protected final IPointer pointer;
   protected final FldContext context;
 
@@ -42,8 +44,6 @@ public abstract class AbstractFldVar implements Serializable {
   public FldGrp redefine() {
     return new FldGrp(pointer.redefine(), context);
   }
-
-  private static final String HEX = "0123456789abcdef";
 
   public void dumpBytes() {
     dumpBytes(System.out);

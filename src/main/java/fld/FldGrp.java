@@ -66,15 +66,6 @@ public class FldGrp extends AbstractFldVar implements Serializable {
     return this;
   }
 
-  @Override
-  public String toString() {
-    try {
-      return new String(pointer.getBytes(), context.getEncoding() );
-    } catch(UnsupportedEncodingException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
   public FldGrp grp() {
     return new FldGrp(pointer.alloc(0), context);
   }
@@ -95,5 +86,14 @@ public class FldGrp extends AbstractFldVar implements Serializable {
 
   public FldGrpList occurs(int count) {
     return new FldGrpList(pointer.occurs(count), context);
+  }
+
+  @Override
+  public String toString() {
+    try {
+      return new String(pointer.getBytes(), context.getEncoding() );
+    } catch(UnsupportedEncodingException e) {
+      throw new RuntimeException(e);
+    }
   }
 }
