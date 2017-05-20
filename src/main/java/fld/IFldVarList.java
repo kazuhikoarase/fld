@@ -8,6 +8,6 @@ import java.io.Serializable;
 public interface IFldVarList<T> extends Iterable<IFldVar<T>>, Serializable {
   IFldVar<T> get(int n);
   int getCount();
-  IFldVarList<T> value(T v);
   IFldGrpList redefine();
+  IFldVarList<T> value(T v);
 }

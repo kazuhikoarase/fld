@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 public interface IFldGrpList extends Iterable<IFldGrp>, Serializable {
   IFldGrp get(int n);
   int getCount();
+  IFldGrpList redefine();
   IFldGrpList grp();
   IFldVarList<String> str(int length);
   IFldVarList<BigDecimal> num(int ipartLen, int fpartLen);
   IFldVarList<BigDecimal> num(int ipartLen);
-  IFldGrpList redefine();
 }

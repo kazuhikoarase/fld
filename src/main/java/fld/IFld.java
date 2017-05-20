@@ -14,11 +14,11 @@ import fld.pointer.IPointer;
 public interface IFld extends Serializable {
   IPointer getPointer();
   IFldContext getContext();
+  IFldGrp redefine();
   byte[] getBytes();
   void setBytes(byte[] bytes);
   void writeTo(OutputStream out) throws IOException;
   void readFrom(InputStream in) throws IOException;
-  IFldGrp redefine();
   void dumpBytes();
   void dumpBytes(PrintStream out);
 }
