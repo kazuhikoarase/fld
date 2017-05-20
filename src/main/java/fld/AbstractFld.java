@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 
 import fld.pointer.IPointer;
@@ -13,42 +12,59 @@ import fld.pointer.IPointer;
  * @author kazuhiko arase
  */
 @SuppressWarnings("serial")
-public abstract class AbstractFldVar implements Serializable {
+abstract class AbstractFld implements IFld {
 
   private static final String HEX = "0123456789abcdef";
 
   protected final IPointer pointer;
-  protected final FldContext context;
+  protected final IFldContext context;
 
-  protected AbstractFldVar(IPointer pointer, FldContext context) {
+  protected AbstractFld(IPointer pointer, IFldContext context) {
     this.pointer = pointer;
     this.context = context;
   }
 
+  @Override
+  public IPointer getPointer() {
+    return pointer;
+  }
+
+  @Override
+  public IFldContext getContext() {
+    return context;
+  }
+
+  @Override
   public byte[] getBytes() {
     return pointer.getBytes();
   }
 
+  @Override
   public void setBytes(byte[] bytes) {
     pointer.setBytes(bytes);
   }
 
+  @Override
   public void writeTo(OutputStream out) throws IOException {
     pointer.writeTo(out);
   }
 
+  @Override
   public void readFrom(InputStream in) throws IOException {
     pointer.readFrom(in);
   }
 
-  public FldGrp redefine() {
+  @Override
+  public IFldGrp redefine() {
     return new FldGrp(pointer.redefine(), context);
   }
 
+  @Override
   public void dumpBytes() {
     dumpBytes(System.out);
   }
 
+  @Override
   public void dumpBytes(PrintStream out) {
     synchronized(out) {
 

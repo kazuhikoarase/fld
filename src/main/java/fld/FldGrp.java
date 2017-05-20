@@ -1,6 +1,5 @@
 package fld;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
@@ -12,7 +11,7 @@ import fld.pointer.RootPointer;
  * @author kazuhiko arase
  */
 @SuppressWarnings("serial")
-public class FldGrp extends AbstractFldVar implements Serializable {
+public class FldGrp extends AbstractFld implements IFldGrp {
 
   public FldGrp() {
     this(System.getProperty("file.encoding") );
@@ -22,29 +21,33 @@ public class FldGrp extends AbstractFldVar implements Serializable {
     this(new RootPointer(), new FldContext(encoding) );
   }
 
-  protected FldGrp(FldGrp grp) {
-    super(grp.pointer, grp.context);
+  protected FldGrp(IFldGrp grp) {
+    super(grp.getPointer(), grp.getContext() );
   }
 
-  protected FldGrp(IPointer pointer, FldContext context) {
+  protected FldGrp(IPointer pointer, IFldContext context) {
     super(pointer, context);
   }
 
+  @Override
   public String get() {
     return context.getStringProvider().fromBytes(getBytes() );
   }
 
+  @Override
   public void set(String v) {
     setBytes(context.getStringProvider().
         toBytes(v, pointer.getLength() ) );
   }
 
+  @Override
   public void set(BigDecimal v) {
     setBytes(context.getNumberProvider(0).
         toBytes(v, pointer.getLength() ) );
   }
 
-  public FldGrp value(final String v) {
+  @Override
+  public IFldGrp value(final String v) {
     pointer.value(new IValue() {
       @Override
       public byte[] getValue() {
@@ -55,7 +58,8 @@ public class FldGrp extends AbstractFldVar implements Serializable {
     return this;
   }
 
-  public FldGrp value(final BigDecimal v) {
+  @Override
+  public IFldGrp value(final BigDecimal v) {
     pointer.value(new IValue() {
       @Override
       public byte[] getValue() {
@@ -66,25 +70,30 @@ public class FldGrp extends AbstractFldVar implements Serializable {
     return this;
   }
 
-  public FldGrp grp() {
+  @Override
+  public IFldGrp grp() {
     return new FldGrp(pointer.alloc(0), context);
   }
 
-  public FldVar<String> str(int length) {
+  @Override
+  public IFldVar<String> str(int length) {
     return new FldVar<String>(pointer.alloc(length),
         context, context.getStringProvider() );
   }
 
-  public FldVar<BigDecimal> num(int ipartLen, int fpartLen) {
+  @Override
+  public IFldVar<BigDecimal> num(int ipartLen, int fpartLen) {
     return new FldVar<BigDecimal>(pointer.alloc(ipartLen + fpartLen),
         context, context.getNumberProvider(fpartLen) );
   }
 
-  public FldVar<BigDecimal> num(int ipartLen) {
+  @Override
+  public IFldVar<BigDecimal> num(int ipartLen) {
     return num(ipartLen, 0);
   }
 
-  public FldGrpList occurs(int count) {
+  @Override
+  public IFldGrpList occurs(int count) {
     return new FldGrpList(pointer.occurs(count), context);
   }
 

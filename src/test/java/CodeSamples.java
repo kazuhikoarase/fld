@@ -11,9 +11,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import fld.FldGrp;
-import fld.FldGrpList;
-import fld.FldVar;
-import fld.FldVarList;
+import fld.IFldGrp;
+import fld.IFldGrpList;
+import fld.IFldVar;
+import fld.IFldVarList;
 
 @SuppressWarnings({"unused", "serial"})
 public class CodeSamples {
@@ -21,12 +22,12 @@ public class CodeSamples {
   @Test
   public void sample01() {
 
-    FldGrp wrk = new FldGrp();
-    FldVar<String> s1 = wrk.str(1).value("1");
-    FldVar<String> s2 = wrk.str(2);
-    FldVar<BigDecimal> n1 = wrk.num(2).value(BigDecimal.valueOf(2) );
-    FldVar<BigDecimal> n2 = wrk.num(3).value(BigDecimal.valueOf(-50) );
-    FldVar<BigDecimal> n3 = wrk.num(2, 2);
+    IFldGrp wrk = new FldGrp();
+    IFldVar<String> s1 = wrk.str(1).value("1");
+    IFldVar<String> s2 = wrk.str(2);
+    IFldVar<BigDecimal> n1 = wrk.num(2).value(BigDecimal.valueOf(2) );
+    IFldVar<BigDecimal> n2 = wrk.num(3).value(BigDecimal.valueOf(-50) );
+    IFldVar<BigDecimal> n3 = wrk.num(2, 2);
 
     s2.set("A");
     n3.set(BigDecimal.valueOf(3.4) );
@@ -37,14 +38,14 @@ public class CodeSamples {
   @Test
   public void sample02() {
 
-    FldGrp wrk = new FldGrp();
-    FldGrp ws = wrk.grp();
-    FldVar<String> s1 = ws.str(1).value("A");
-    FldVar<String> s2 = ws.str(2);
-    FldGrp wn = wrk.grp();
-    FldVar<BigDecimal> n1 = wn.num(2).value(BigDecimal.valueOf(2) );
-    FldVar<BigDecimal> n2 = wn.num(3).value(BigDecimal.valueOf(-99) );
-    FldVar<BigDecimal> n3 = wn.num(3, 2);
+    IFldGrp wrk = new FldGrp();
+    IFldGrp ws = wrk.grp();
+    IFldVar<String> s1 = ws.str(1).value("A");
+    IFldVar<String> s2 = ws.str(2);
+    IFldGrp wn = wrk.grp();
+    IFldVar<BigDecimal> n1 = wn.num(2).value(BigDecimal.valueOf(2) );
+    IFldVar<BigDecimal> n2 = wn.num(3).value(BigDecimal.valueOf(-99) );
+    IFldVar<BigDecimal> n3 = wn.num(3, 2);
 
     s2.set("BC");
     n3.set(BigDecimal.valueOf(3.4) );
@@ -57,10 +58,10 @@ public class CodeSamples {
   @Test
   public void sample03() {
 
-    FldGrp wrk = new FldGrp();
-    FldVar<String> s1 = wrk.str(1).value("1");
-    FldVar<String> s2 = wrk.str(2).value("23");
-    FldVar<String> s3 = wrk.str(5).value("ABCDE");
+    IFldGrp wrk = new FldGrp();
+    IFldVar<String> s1 = wrk.str(1).value("1");
+    IFldVar<String> s2 = wrk.str(2).value("23");
+    IFldVar<String> s3 = wrk.str(5).value("ABCDE");
 
     Assert.assertEquals("1", s1.get() );
     Assert.assertEquals("23", s2.get() );
@@ -79,13 +80,13 @@ public class CodeSamples {
   @Test
   public void sample04() {
 
-    FldGrp wrk = new FldGrp();
-    FldVar<String> s1 = wrk.str(4).value("1234");
-    FldVar<String> s2 = wrk.str(4).value("5678");
-    FldGrp wrk2 = wrk.redefine();
-    FldVar<String> s3 = wrk2.str(1);
-    FldVar<String> s4 = wrk2.str(2);
-    FldVar<String> s5 = wrk2.str(5);
+    IFldGrp wrk = new FldGrp();
+    IFldVar<String> s1 = wrk.str(4).value("1234");
+    IFldVar<String> s2 = wrk.str(4).value("5678");
+    IFldGrp wrk2 = wrk.redefine();
+    IFldVar<String> s3 = wrk2.str(1);
+    IFldVar<String> s4 = wrk2.str(2);
+    IFldVar<String> s5 = wrk2.str(5);
 
     Assert.assertEquals("12345678", wrk.get() );
     Assert.assertEquals("1234", s1.get() );
@@ -107,10 +108,10 @@ public class CodeSamples {
   @Test
   public void sample05() {
 
-    FldGrp wrk = new FldGrp();
-    FldVar<String> s1 = wrk.str(8).value("123ABCDE");
-    FldGrp wrk2 = wrk.redefine();
-    FldVarList<String> s2 = wrk2.str(2).occurs(4);
+    IFldGrp wrk = new FldGrp();
+    IFldVar<String> s1 = wrk.str(8).value("123ABCDE");
+    IFldGrp wrk2 = wrk.redefine();
+    IFldVarList<String> s2 = wrk2.str(2).occurs(4);
 
     Assert.assertEquals("123ABCDE", s1.get() );
     Assert.assertEquals(4, s2.getCount() );
@@ -123,10 +124,10 @@ public class CodeSamples {
   @Test
   public void sample06() {
 
-    FldGrp wrk = new FldGrp();
-    FldVar<String> s1 = wrk.str(8).value("123ABCDE");
-    FldGrp wrk2 = wrk.redefine();
-    FldVarList<String> s2 = wrk2.grp().occurs(2).str(4);
+    IFldGrp wrk = new FldGrp();
+    IFldVar<String> s1 = wrk.str(8).value("123ABCDE");
+    IFldGrp wrk2 = wrk.redefine();
+    IFldVarList<String> s2 = wrk2.grp().occurs(2).str(4);
 
     Assert.assertEquals("123ABCDE", s1.get() );
     Assert.assertEquals(2, s2.getCount() );
@@ -137,12 +138,12 @@ public class CodeSamples {
   @Test
   public void sample07() {
 
-    FldGrp wrk = new FldGrp();
-    FldVar<String> s1 = wrk.str(8).value("123ABCDE");
-    FldGrp wrk2 = wrk.redefine();
-    FldGrpList gl = wrk2.grp().occurs(2);
-    FldVarList<String> s2 = gl.str(1);
-    FldVarList<String> s3 = gl.str(3);
+    IFldGrp wrk = new FldGrp();
+    IFldVar<String> s1 = wrk.str(8).value("123ABCDE");
+    IFldGrp wrk2 = wrk.redefine();
+    IFldGrpList gl = wrk2.grp().occurs(2);
+    IFldVarList<String> s2 = gl.str(1);
+    IFldVarList<String> s3 = gl.str(3);
 
     Assert.assertEquals("123ABCDE", s1.get() );
     Assert.assertEquals(2, s2.getCount() );
@@ -162,10 +163,10 @@ public class CodeSamples {
       // use EBCDIC.
       super("Cp037");
     }
-    public final FldVar<BigDecimal> recordCount = num(3); // max 999 records.
-    public final FldGrp record = grp();
-    public final FldVar<String> name = record.str(16);
-    public final FldVar<BigDecimal> amount = record.num(6);
+    public final IFldVar<BigDecimal> recordCount = num(3); // max 999 records.
+    public final IFldGrp record = grp();
+    public final IFldVar<String> name = record.str(16);
+    public final IFldVar<BigDecimal> amount = record.num(6);
   }
 
   @Test
@@ -237,13 +238,13 @@ public class CodeSamples {
 
   // More complex
   public static class DateGrp extends FldGrp {
-    public DateGrp(FldGrp grp) {
+    public DateGrp(IFldGrp grp) {
       super(grp);
     }
-    public final FldGrp ym = grp();
-    public final FldVar<BigDecimal> yy = ym.num(4);
-    public final FldVar<BigDecimal> mm = ym.num(2);
-    public final FldVar<BigDecimal> dd = num(2);
+    public final IFldGrp ym = grp();
+    public final IFldVar<BigDecimal> yy = ym.num(4);
+    public final IFldVar<BigDecimal> mm = ym.num(2);
+    public final IFldVar<BigDecimal> dd = num(2);
   }
 
   public static class MyGrp2 extends FldGrp {

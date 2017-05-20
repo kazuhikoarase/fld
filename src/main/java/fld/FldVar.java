@@ -1,7 +1,5 @@
 package fld;
 
-import java.io.Serializable;
-
 import fld.pointer.IPointer;
 import fld.pointer.IValue;
 
@@ -9,11 +7,11 @@ import fld.pointer.IValue;
  * @author kazuhiko arase
  */
 @SuppressWarnings("serial")
-public class FldVar<T> extends AbstractFldVar implements Serializable {
+class FldVar<T> extends AbstractFld implements IFldVar<T> {
 
   private final IFldVarProvider<T> provider;
 
-  protected FldVar(IPointer pointer, FldContext context,
+  protected FldVar(IPointer pointer, IFldContext context,
       IFldVarProvider<T> provider) {
     super(pointer, context);
     this.provider = provider;
@@ -26,7 +24,8 @@ public class FldVar<T> extends AbstractFldVar implements Serializable {
     return provider.toBytes(v, pointer.getLength() );
   }
 
-  public FldVar<T> value(final T v) {
+  @Override
+  public IFldVar<T> value(final T v) {
     pointer.value(new IValue() {
       @Override
       public byte[] getValue() {
@@ -36,15 +35,18 @@ public class FldVar<T> extends AbstractFldVar implements Serializable {
     return this;
   }
 
+  @Override
   public void set(T v) {
     pointer.setBytes(toBytes(v) );
   }
 
+  @Override
   public T get() {
     return provider.fromBytes(pointer.getBytes() );
   }
 
-  public FldVarList<T> occurs(int count) {
+  @Override
+  public IFldVarList<T> occurs(int count) {
     return new FldVarList<T>(pointer.occurs(count), context, provider);
   }
 

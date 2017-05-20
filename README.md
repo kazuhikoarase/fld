@@ -17,11 +17,11 @@ COBOL
 
 Java
 ```java
-FldGrp grp = new FldGrp();
-FldGrp gr = grp.grp();
-FldVar<String> s1 = gr.str(2);
-FldVar<String> s2 = gr.str(6);
-FldVar<BigDecimal> n1 = grp.num(4);
+IFldGrp grp = new FldGrp();
+IFldGrp gr = grp.grp();
+IFldVar<String> s1 = gr.str(2);
+IFldVar<String> s2 = gr.str(6);
+IFldVar<BigDecimal> n1 = grp.num(4);
 ```
 
 ## Code Samples

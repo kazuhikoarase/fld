@@ -1,6 +1,5 @@
 package fld;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -11,63 +10,70 @@ import fld.pointer.IPointerList;
  * @author kazuhiko arase
  */
 @SuppressWarnings("serial")
-public class FldGrpList implements Iterable<FldGrp>, Serializable {
+class FldGrpList implements IFldGrpList {
 
   protected final IPointerList pointerList;
-  protected final FldContext context;
+  protected final IFldContext context;
 
   protected FldGrpList(FldGrpList list) {
     this(list.pointerList, list.context);
   }
 
-  protected FldGrpList(IPointerList pointerList, FldContext context) {
+  protected FldGrpList(IPointerList pointerList, IFldContext context) {
     this.pointerList = pointerList;
     this.context = context;
   }
 
-  public FldGrp get(int n) {
+  @Override
+  public IFldGrp get(int n) {
     if (n < 1 || n > pointerList.getCount() ) {
       throw new ArrayIndexOutOfBoundsException();
     }
     return new FldGrp(pointerList.get(n - 1), context);
   }
 
+  @Override
   public int getCount() {
     return pointerList.getCount();
   }
 
-  public FldGrpList grp() {
+  @Override
+  public IFldGrpList grp() {
     return new FldGrpList(pointerList.alloc(0), context);
   }
 
-  public FldVarList<String> str(int length) {
+  @Override
+  public IFldVarList<String> str(int length) {
     return new FldVarList<String>(pointerList.alloc(length),
         context, context.getStringProvider() );
   }
 
-  public FldVarList<BigDecimal> num(int ipartLen, int fpartLen) {
+  @Override
+  public IFldVarList<BigDecimal> num(int ipartLen, int fpartLen) {
     return new FldVarList<BigDecimal>(pointerList.alloc(ipartLen + fpartLen),
         context, context.getNumberProvider(fpartLen) );
   }
 
-  public FldVarList<BigDecimal> num(int ipartLen) {
+  @Override
+  public IFldVarList<BigDecimal> num(int ipartLen) {
     return num(ipartLen, 0);
   }
 
-  public FldGrpList redefine() {
+  @Override
+  public IFldGrpList redefine() {
     return new FldGrpList(pointerList.redefine(), context);
   }
 
   @Override
-  public Iterator<FldGrp> iterator() {
-    return new Iterator<FldGrp>() {
+  public Iterator<IFldGrp> iterator() {
+    return new Iterator<IFldGrp>() {
       private int index = 0;
       @Override
       public boolean hasNext() {
         return index < getCount();
       }
       @Override
-      public FldGrp next() {
+      public IFldGrp next() {
         if (!hasNext() ) {
           throw new NoSuchElementException();
         }
