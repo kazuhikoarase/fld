@@ -22,7 +22,7 @@ public class FldGrp extends AbstractFld implements IFldGrp {
   }
 
   protected FldGrp(IFldGrp grp) {
-    super(grp.getPointer(), grp.getContext() );
+    this(grp.getPointer(), grp.getContext() );
   }
 
   protected FldGrp(IPointer pointer, IFldContext context) {
