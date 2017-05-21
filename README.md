@@ -31,6 +31,8 @@ IFldVar<String> s2 = gr.str(6);
 IFldVar<BigDecimal> n1 = grp.num(4);
 ```
 
+or as reusable one.
+
 ```java
 public class Grp extends FldGrp {
   public final IFldGrp gr = grp();
