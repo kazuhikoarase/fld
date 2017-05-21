@@ -12,6 +12,7 @@ Licensed under the MIT license:
 With FLD, you can migrate your COBOL source to Java like below.
 
 COBOL
+
 ```cobol
 01 GRP.
     05 GR.
@@ -21,12 +22,22 @@ COBOL
 ```
 
 Java
+
 ```java
 IFldGrp grp = new FldGrp();
 IFldGrp gr = grp.grp();
 IFldVar<String> s1 = gr.str(2);
 IFldVar<String> s2 = gr.str(6);
 IFldVar<BigDecimal> n1 = grp.num(4);
+```
+
+```java
+public class Grp extends FldGrp {
+  public final IFldGrp gr = grp();
+  public final IFldVar<String> s1 = gr.str(2);
+  public final IFldVar<String> s2 = gr.str(6);
+  public final IFldVar<BigDecimal> n1 = num(4);
+}
 ```
 
 ## Code Samples
