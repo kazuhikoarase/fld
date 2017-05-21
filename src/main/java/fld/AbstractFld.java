@@ -25,16 +25,6 @@ abstract class AbstractFld implements IFld {
   }
 
   @Override
-  public IPointer getPointer() {
-    return pointer;
-  }
-
-  @Override
-  public IFldContext getContext() {
-    return context;
-  }
-
-  @Override
   public byte[] getBytes() {
     return pointer.getBytes();
   }

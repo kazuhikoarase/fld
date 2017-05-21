@@ -10,7 +10,6 @@ import java.util.Arrays;
 class StringVarProvider extends AbstractVarProvider<String> {
 
   private final String encoding;
-
   private final byte spc;
 
   public StringVarProvider(String encoding) {

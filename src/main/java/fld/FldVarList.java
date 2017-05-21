@@ -20,9 +20,9 @@ class FldVarList<T> implements IFldVarList<T> {
       IFldContext context, IFldVarProvider<T> provider) {
     this.pointerList = pointerList;
     this.context = context;
-    list = new IFldVar<?>[pointerList.getCount()];
+    this.list = new IFldVar<?>[pointerList.getCount()];
     for (int i = 0; i < pointerList.getCount(); i += 1) {
-      list[i] = new FldVar<T>(pointerList.get(i), context, provider);
+      this.list[i] = new FldVar<T>(pointerList.get(i), context, provider);
     }
   }
 

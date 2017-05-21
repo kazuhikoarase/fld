@@ -6,14 +6,10 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
 
-import fld.pointer.IPointer;
-
 /**
  * @author kazuhiko arase
  */
 public interface IFld extends Serializable {
-  IPointer getPointer();
-  IFldContext getContext();
   IFldGrp redefine();
   byte[] getBytes();
   void setBytes(byte[] bytes);
