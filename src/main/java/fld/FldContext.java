@@ -10,12 +10,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @SuppressWarnings({"serial", "unchecked"})
 class FldContext implements IFldContext {
 
+  private static final ConcurrentHashMap<Object, IFldVarProvider<?>> cache =
+      new ConcurrentHashMap<Object, IFldVarProvider<?>>();
+
   private final String defaultEncoding;
-  private final ConcurrentHashMap<Object, IFldVarProvider<?>> cache;
 
   public FldContext(String defaultEncoding) {
     this.defaultEncoding = defaultEncoding;
-    this.cache = new ConcurrentHashMap<Object, IFldVarProvider<?>>();
   }
 
   public String getDefaultEncoding() {
