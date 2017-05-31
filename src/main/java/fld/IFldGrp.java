@@ -7,8 +7,8 @@ import java.math.BigDecimal;
  */
 public interface IFldGrp extends IFld {
   String get();
-  void set(String v);
-  void set(BigDecimal v);
+  IFldGrp set(String v);
+  IFldGrp set(BigDecimal v);
   IFldGrp value(String v);
   IFldGrp value(BigDecimal v);
   IFldGrpList occurs(int count);

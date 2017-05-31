@@ -36,8 +36,9 @@ class FldVar<T> extends AbstractFld implements IFldVar<T> {
   }
 
   @Override
-  public void set(T v) {
+  public IFldVar<T> set(T v) {
     pointer.setBytes(toBytes(v) );
+    return this;
   }
 
   @Override

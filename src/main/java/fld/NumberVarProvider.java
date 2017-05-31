@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @SuppressWarnings("serial")
 class NumberVarProvider extends AbstractVarProvider<BigDecimal> {
 
-  public static class Key implements Serializable {
+  protected static class Key implements Serializable {
     public final String encoding;
     public final int decimalDigits;
     public Key(String encoding, int decimalDigits) {

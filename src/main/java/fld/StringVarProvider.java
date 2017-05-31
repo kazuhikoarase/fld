@@ -10,7 +10,7 @@ import java.util.Arrays;
 @SuppressWarnings("serial")
 class StringVarProvider extends AbstractVarProvider<String> {
 
-  public static class Key implements Serializable {
+  protected static class Key implements Serializable {
     public final String encoding;
     public Key(String encoding) {
       this.encoding = encoding;

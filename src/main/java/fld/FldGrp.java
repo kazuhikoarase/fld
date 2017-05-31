@@ -36,15 +36,17 @@ public class FldGrp extends AbstractFld implements IFldGrp {
   }
 
   @Override
-  public void set(String v) {
+  public FldGrp set(String v) {
     setBytes(context.getStringProvider(
         context.getDefaultEncoding() ).toBytes(v, pointer.getLength() ) );
+    return this;
   }
 
   @Override
-  public void set(BigDecimal v) {
+  public FldGrp set(BigDecimal v) {
     setBytes(context.getNumberProvider(
         0, context.getDefaultEncoding() ).toBytes(v, pointer.getLength() ) );
+    return this;
   }
 
   @Override
