@@ -71,7 +71,7 @@ abstract class AbstractFld implements IFld {
         try {
           String c = new String(buf,
               pointer.getOffset() + i, 1,
-              context.getEncoding() );
+              context.getDefaultEncoding() );
           if (c.length() == 1 &&
               0x20 < c.charAt(0) && c.charAt(0) <= 0x7e) {
             out.print(c);

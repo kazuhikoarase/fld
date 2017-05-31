@@ -31,19 +31,20 @@ public class FldGrp extends AbstractFld implements IFldGrp {
 
   @Override
   public String get() {
-    return context.getStringProvider().fromBytes(getBytes() );
+    return context.getStringProvider(
+        context.getDefaultEncoding() ).fromBytes(getBytes() );
   }
 
   @Override
   public void set(String v) {
-    setBytes(context.getStringProvider().
-        toBytes(v, pointer.getLength() ) );
+    setBytes(context.getStringProvider(
+        context.getDefaultEncoding() ).toBytes(v, pointer.getLength() ) );
   }
 
   @Override
   public void set(BigDecimal v) {
-    setBytes(context.getNumberProvider(0).
-        toBytes(v, pointer.getLength() ) );
+    setBytes(context.getNumberProvider(
+        0, context.getDefaultEncoding() ).toBytes(v, pointer.getLength() ) );
   }
 
   @Override
@@ -51,8 +52,8 @@ public class FldGrp extends AbstractFld implements IFldGrp {
     pointer.value(new IValue() {
       @Override
       public byte[] getValue() {
-        return context.getStringProvider().
-            toBytes(v, pointer.getLength() );
+        return context.getStringProvider(
+            context.getDefaultEncoding() ).toBytes(v, pointer.getLength() );
       }
     });
     return this;
@@ -63,8 +64,8 @@ public class FldGrp extends AbstractFld implements IFldGrp {
     pointer.value(new IValue() {
       @Override
       public byte[] getValue() {
-        return context.getNumberProvider(0).
-            toBytes(v, pointer.getLength() );
+        return context.getNumberProvider(
+            0, context.getDefaultEncoding() ).toBytes(v, pointer.getLength() );
       }
     });
     return this;
@@ -77,14 +78,18 @@ public class FldGrp extends AbstractFld implements IFldGrp {
 
   @Override
   public IFldVar<String> str(int length) {
-    return new FldVar<String>(pointer.alloc(length),
-        context, context.getStringProvider() );
+    return new FldVar<String>(
+        pointer.alloc(length),
+        context,
+        context.getStringProvider(context.getDefaultEncoding() ) );
   }
 
   @Override
   public IFldVar<BigDecimal> num(int ipartLen, int fpartLen) {
-    return new FldVar<BigDecimal>(pointer.alloc(ipartLen + fpartLen),
-        context, context.getNumberProvider(fpartLen) );
+    return new FldVar<BigDecimal>(
+        pointer.alloc(ipartLen + fpartLen),
+        context,
+        context.getNumberProvider(fpartLen, context.getDefaultEncoding() ) );
   }
 
   @Override
@@ -100,7 +105,7 @@ public class FldGrp extends AbstractFld implements IFldGrp {
   @Override
   public String toString() {
     try {
-      return new String(pointer.getBytes(), context.getEncoding() );
+      return new String(pointer.getBytes(), context.getDefaultEncoding() );
     } catch(UnsupportedEncodingException e) {
       throw new RuntimeException(e);
     }

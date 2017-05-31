@@ -7,36 +7,39 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author kazuhiko arase
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unchecked"})
 class FldContext implements IFldContext {
 
-  private final String encoding;
-  private final IFldVarProvider<String> stringProvider;
-  private final ConcurrentHashMap<Integer,
-      IFldVarProvider<BigDecimal>> numberProviderMap;
+  private final String defaultEncoding;
+  private final ConcurrentHashMap<Object, IFldVarProvider<?>> cache;
 
-  public FldContext(String encoding) {
-    checkEncoding(encoding);
-    this.encoding = encoding;
-    this.stringProvider = new StringVarProvider(encoding);
-    this.numberProviderMap =
-        new ConcurrentHashMap<Integer, IFldVarProvider<BigDecimal>>();
+  public FldContext(String defaultEncoding) {
+    this.defaultEncoding = defaultEncoding;
+    this.cache = new ConcurrentHashMap<Object, IFldVarProvider<?>>();
   }
 
-  public String getEncoding() {
-    return encoding;
+  public String getDefaultEncoding() {
+    return defaultEncoding;
   }
 
-  public IFldVarProvider<String> getStringProvider() {
-    return stringProvider;
-  }
-
-  public IFldVarProvider<BigDecimal> getNumberProvider(int digits) {
-    if (!numberProviderMap.containsKey(digits) ) {
-      numberProviderMap.putIfAbsent(digits,
-          new NumberVarProvider(encoding , digits) );
+  public IFldVarProvider<String> getStringProvider(String encoding) {
+    StringVarProvider.Key key = new StringVarProvider.Key(encoding);
+    if (!cache.containsKey(key) ) {
+      checkEncoding(key.encoding);
+      cache.putIfAbsent(key, new StringVarProvider(key) );
     }
-    return numberProviderMap.get(digits);
+    return (IFldVarProvider<String>)cache.get(key);
+  }
+
+  public IFldVarProvider<BigDecimal> getNumberProvider(
+      int decimalDigits, String encoding) {
+    NumberVarProvider.Key key = new NumberVarProvider.Key(
+        encoding, decimalDigits);
+    if (!cache.containsKey(key) ) {
+      checkEncoding(key.encoding);
+      cache.putIfAbsent(key, new NumberVarProvider(key) );
+    }
+    return (IFldVarProvider<BigDecimal>)cache.get(key);
   }
 
   protected static void checkEncoding(String encoding) {

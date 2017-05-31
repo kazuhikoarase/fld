@@ -7,7 +7,8 @@ import java.math.BigDecimal;
  * @author kazuhiko arase
  */
 public interface IFldContext extends Serializable {
-  String getEncoding();
-  IFldVarProvider<String> getStringProvider();
-  IFldVarProvider<BigDecimal> getNumberProvider(int digits);
+  String getDefaultEncoding();
+  IFldVarProvider<String> getStringProvider(String encoding);
+  IFldVarProvider<BigDecimal> getNumberProvider(
+      int decimalDigits, String encoding);
 }

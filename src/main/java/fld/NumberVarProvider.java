@@ -1,5 +1,6 @@
 package fld;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
@@ -9,15 +10,36 @@ import java.math.BigDecimal;
 @SuppressWarnings("serial")
 class NumberVarProvider extends AbstractVarProvider<BigDecimal> {
 
+  public static class Key implements Serializable {
+    public final String encoding;
+    public final int decimalDigits;
+    public Key(String encoding, int decimalDigits) {
+      this.encoding = encoding;
+      this.decimalDigits = decimalDigits;
+    }
+    @Override
+    public int hashCode() {
+      return encoding.hashCode() ^ decimalDigits;
+    }
+    @Override
+    public boolean equals(Object obj) {
+      if (obj instanceof Key) {
+        return encoding.equals( ((Key)obj).encoding) &&
+            decimalDigits == ((Key)obj).decimalDigits;
+      }
+      return false;
+    }
+  }
+
   private static final String DIGITS = "0123456789";
   private static final String NEG_DIGITS = "pqrstuvwxy";
 
   private final String encoding;
   private final BigDecimal scale;
 
-  public NumberVarProvider(String encoding, int decimalDigits) {
-    this.encoding = encoding;
-    this.scale = getScale(decimalDigits);
+  public NumberVarProvider(Key key) {
+    this.encoding = key.encoding;
+    this.scale = getScale(key.decimalDigits);
   }
 
   @Override

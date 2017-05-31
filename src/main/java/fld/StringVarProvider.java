@@ -1,5 +1,6 @@
 package fld;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
@@ -9,11 +10,29 @@ import java.util.Arrays;
 @SuppressWarnings("serial")
 class StringVarProvider extends AbstractVarProvider<String> {
 
+  public static class Key implements Serializable {
+    public final String encoding;
+    public Key(String encoding) {
+      this.encoding = encoding;
+    }
+    @Override
+    public int hashCode() {
+      return encoding.hashCode();
+    }
+    @Override
+    public boolean equals(Object obj) {
+      if (obj instanceof Key) {
+        return encoding.equals( ((Key)obj).encoding);
+      }
+      return false;
+    }
+  }
+
   private final String encoding;
   private final byte spc;
 
-  public StringVarProvider(String encoding) {
-    this.encoding = encoding;
+  public StringVarProvider(Key key) {
+    this.encoding = key.encoding;
     try {
       this.spc = "\u0020".getBytes(encoding)[0];
     } catch(UnsupportedEncodingException e) {

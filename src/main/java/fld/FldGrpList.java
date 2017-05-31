@@ -45,13 +45,14 @@ class FldGrpList implements IFldGrpList {
   @Override
   public IFldVarList<String> str(int length) {
     return new FldVarList<String>(pointerList.alloc(length),
-        context, context.getStringProvider() );
+        context, context.getStringProvider(context.getDefaultEncoding() ) );
   }
 
   @Override
   public IFldVarList<BigDecimal> num(int ipartLen, int fpartLen) {
     return new FldVarList<BigDecimal>(pointerList.alloc(ipartLen + fpartLen),
-        context, context.getNumberProvider(fpartLen) );
+        context, context.getNumberProvider(fpartLen,
+            context.getDefaultEncoding() ) );
   }
 
   @Override
