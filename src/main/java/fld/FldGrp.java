@@ -45,7 +45,7 @@ public class FldGrp extends AbstractFld implements IFldGrp {
   @Override
   public FldGrp set(BigDecimal v) {
     setBytes(context.getNumberProvider(
-        0, context.getDefaultEncoding() ).toBytes(v, pointer.getLength() ) );
+        context.getDefaultEncoding(), 0).toBytes(v, pointer.getLength() ) );
     return this;
   }
 
@@ -67,7 +67,7 @@ public class FldGrp extends AbstractFld implements IFldGrp {
       @Override
       public byte[] getValue() {
         return context.getNumberProvider(
-            0, context.getDefaultEncoding() ).toBytes(v, pointer.getLength() );
+            context.getDefaultEncoding(), 0).toBytes(v, pointer.getLength() );
       }
     });
     return this;
@@ -91,7 +91,7 @@ public class FldGrp extends AbstractFld implements IFldGrp {
     return new FldVar<BigDecimal>(
         pointer.alloc(ipartLen + fpartLen),
         context,
-        context.getNumberProvider(fpartLen, context.getDefaultEncoding() ) );
+        context.getNumberProvider(context.getDefaultEncoding(), fpartLen) );
   }
 
   @Override

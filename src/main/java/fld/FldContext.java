@@ -33,7 +33,7 @@ class FldContext implements IFldContext {
   }
 
   public IFldVarProvider<BigDecimal> getNumberProvider(
-      int decimalDigits, String encoding) {
+      String encoding, int decimalDigits) {
     NumberVarProvider.Key key = new NumberVarProvider.Key(
         encoding, decimalDigits);
     if (!cache.containsKey(key) ) {

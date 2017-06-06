@@ -51,8 +51,8 @@ class FldGrpList implements IFldGrpList {
   @Override
   public IFldVarList<BigDecimal> num(int ipartLen, int fpartLen) {
     return new FldVarList<BigDecimal>(pointerList.alloc(ipartLen + fpartLen),
-        context, context.getNumberProvider(fpartLen,
-            context.getDefaultEncoding() ) );
+        context, context.getNumberProvider(context.getDefaultEncoding(),
+            fpartLen) );
   }
 
   @Override

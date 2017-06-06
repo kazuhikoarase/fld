@@ -9,6 +9,6 @@ import java.math.BigDecimal;
 public interface IFldContext extends Serializable {
   String getDefaultEncoding();
   IFldVarProvider<String> getStringProvider(String encoding);
-  IFldVarProvider<BigDecimal> getNumberProvider(
-      int decimalDigits, String encoding);
+  IFldVarProvider<BigDecimal> getNumberProvider(String encoding,
+      int decimalDigits);
 }
